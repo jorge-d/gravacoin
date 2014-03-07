@@ -5,11 +5,13 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
+var address = require('./routes/address');
 var http = require('http');
 var path = require('path');
+var redis = require('redis')
 
-var app = express();
+app = express();
+db = redis.createClient();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -32,7 +34,8 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/addresses', address.list);
+app.get('/addresses/create', address.create);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
