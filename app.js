@@ -44,6 +44,7 @@ var address = require('./routes/address');
 app.get('/', routes.index);
 app.get('/addresses', address.list);
 app.get('/addresses/create', address.create);
+app.get('/addresses/:encrypted_email', address.show);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

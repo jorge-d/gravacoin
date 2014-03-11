@@ -12,7 +12,7 @@ gulp.task('lint', function() {
   gulp.src(paths.scripts)
     .pipe(jshint())
     .pipe(jshint.reporter('default'))
-    // .pipe(jshint.reporter('fail'));
+    // .pipe(jshint.reporter('fail')); // Uncomment to raise error on warning
 });
 
 gulp.task('develop', function () {

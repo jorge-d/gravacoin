@@ -13,6 +13,13 @@ exports.list = function(req, res) {
   });
 };
 exports.show = function(req, res) {
+  Address.findOne(
+    { email: req.params.encrypted_email }
+  , function (err, address) {
+    if (err) throw err;
+
+    res.json(address);
+  });
 }
 exports.create = function(req, res) {
   var address = new Address({email: req.query.address});
