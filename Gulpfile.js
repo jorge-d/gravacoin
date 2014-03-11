@@ -5,7 +5,7 @@ var gulp = require('gulp')
   , mocha = require('gulp-mocha');
 
 var paths = {
-  scripts: ['./app.js', './models/*.js', 'public/javascript/*.js', 'routes/*.js', 'spec/*.js'],
+  scripts: ['./app.js', './models/*.js', 'public/javascript/*.js', 'routes/*.js', 'spec/*.js', 'config/*.js'],
   tests: ['./spec/*.js']
 }
 gulp.task('lint', function() {

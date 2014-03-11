@@ -9,13 +9,29 @@ var address = require('./routes/address');
 var http = require('http');
 var path = require('path');
 
-nohm = require('nohm').Nohm;
-redis = require('redis').createClient();
+// Load configurations
+// if test env, load example file
+var env = process.env.NODE_ENV || 'development'
+  , config = require('./config/config')[env]
+  , mongoose = require('mongoose')
 
-redis.on("connect", function() {
-  nohm.setClient(redis);
-  console.log("Nohm Connected to Redis Client");
-});
+// Bootstrap db connection
+// Connect to mongodb
+var connect = function () {
+  var options = { server: { socketOptions: { keepAlive: 1 } } }
+  mongoose.connect(config.db, options)
+}
+connect()
+
+// Error handler
+mongoose.connection.on('error', function (err) {
+  console.log(err)
+})
+
+// Reconnect when closed
+mongoose.connection.on('disconnected', function () {
+  connect()
+})
 
 Address = require('./models/address');
 

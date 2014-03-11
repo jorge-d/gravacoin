@@ -1,15 +1,14 @@
-module.exports = nohm.model('Address', {
-  properties: {
-    email: {
-      type: 'string',
-      unique: true,
-      validations: [
-        'email'
-      ]
-    },
-    validated: {
-      type: "boolean",
-      defaultValue: false,
-    }
-  },
+var mongoose = require('mongoose')
+  , Schema = mongoose.Schema
+
+function validatePresenceOf(value) {
+  return value && value.length;
+}
+
+var AddressSchema = new Schema({
+  'email': { type: String, validate: [validatePresenceOf, 'an email is required'], index: { unique: true } },
+  'validated': {type: Boolean, default: false}
 });
+
+mongoose.model('Address', AddressSchema)
+
