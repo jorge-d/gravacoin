@@ -5,17 +5,19 @@ var assert = require('assert');
 var request = require('supertest');
 var mongoose = require('mongoose');
 var app = require('../app');
+var crypto = require('crypto');
 
 var Address = mongoose.model('Address');
 
-before(function (done) {
-  require('./helper').clearDb(done)
-})
 after(function(done) {
   process.exit(0);
 })
 
 describe('Address', function() {
+  before(function (done) {
+    require('./helper').clearDb(done)
+  })
+
   var default_address = new Address({
     email: 'foobar@example.com'
   })
@@ -25,7 +27,12 @@ describe('Address', function() {
   })
 
   describe('model', function() {
-
+    it('encrypts email after save', function(done) {
+      Address.findOne({email: default_address.email}, function(err, address) {
+        address.encrypted_email.should.eql(crypto.createHash('md5').update(default_address.email).digest("hex"));
+        done();
+      });
+    });
   });
   describe('routes', function() {
     describe('POST /addresses', function() {
@@ -74,7 +81,7 @@ describe('Address', function() {
     describe('GET /addresses/:encrypted_email', function() {
       it('with existing record', function(done) {
         request(app)
-          .get('/addresses/' + default_address.email)
+          .get('/addresses/' + default_address.encrypted_email)
           .end(function(err, res) {
             if (err) throw err;
 
