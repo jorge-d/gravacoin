@@ -1,9 +1,6 @@
 var mongoose = require( 'mongoose' )
   , Address = mongoose.model('Address');
 
-/*
- * GET address listing.
- */
 
 exports.list = function(req, res) {
   Address.find({}, function(err, addresses) {
@@ -16,9 +13,10 @@ exports.show = function(req, res) {
   Address.findOne(
     { email: req.params.encrypted_email }
   , function (err, address) {
-    if (err) throw err;
-
-    res.json(address);
+    if (err)
+      res.json(err);
+    else
+      res.json(address);
   });
 }
 exports.create = function(req, res) {
@@ -27,6 +25,7 @@ exports.create = function(req, res) {
     if (err) {
       console.log('Error:')
       console.log(err);
+      res.send(400);
       return;
     }
     else {

@@ -10,7 +10,7 @@ var paths = {
 }
 gulp.task('lint', function() {
   gulp.src(paths.scripts)
-    .pipe(jshint())
+    .pipe(jshint({laxcomma: true, asi: true}))
     .pipe(jshint.reporter('default'))
     // .pipe(jshint.reporter('fail')); // Uncomment to raise error on warning
 });
@@ -30,4 +30,4 @@ gulp.task('mocha-tests', function () {
 
 gulp.task('test', ['lint', 'mocha-tests']);
 
-gulp.task('default', ['develop']);
+gulp.task('default', ['lint', 'develop']);
