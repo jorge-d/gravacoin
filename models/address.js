@@ -10,5 +10,5 @@ var AddressSchema = new Schema({
   'validated': {type: Boolean, default: false}
 });
 
-mongoose.model('Address', AddressSchema)
+mongoose.model('Address', AddressSchema);
 

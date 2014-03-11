@@ -3,9 +3,10 @@ var mongoose = require( 'mongoose' );
 
 // Bootstrap db connection
 // Connect to mongodb
+
 var connect = function () {
   var options = { server: { socketOptions: { keepAlive: 1 } } }
-  mongoose.connect(config.db, options)
+  mongoose.connect(config.db.url, options)
 }
 connect()
 
@@ -28,6 +29,8 @@ process.on('SIGINT', function() {
     process.exit(0);
   });
 });
+
+mongoose.set('debug', config.db.debug);
 
 // BRING IN YOUR SCHEMAS & MODELS
 // For example

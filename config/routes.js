@@ -4,7 +4,7 @@ var routes = require('../routes')
 function setup(app) {
   app.get('/', routes.index);
   app.get('/addresses', address.list);
-  app.get('/addresses/create', address.create);
+  app.post('/addresses', address.create);
   app.get('/addresses/:encrypted_email', address.show);
 }
 

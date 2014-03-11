@@ -3,18 +3,26 @@ var path = require('path')
 
 module.exports = {
   development: {
-    db: 'mongodb://localhost/noobjs_dev',
+    db: {
+      url: 'mongodb://localhost/noobjs_dev',
+      debug: true
+    },
     root: rootPath,
     app: {
       name: 'Nodejs Gravacoin'
-    }
+    },
+    port: 3000
   },
   test: {
-    db: 'mongodb://localhost/noobjs_test',
+    db: {
+      url: 'mongodb://localhost/noobjs_test',
+      debug: false
+    },
     root: rootPath,
     app: {
       name: 'Nodejs Gravatest'
-    }
+    },
+    port: 4004
   },
   production: {}
 }
