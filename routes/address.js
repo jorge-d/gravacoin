@@ -14,7 +14,9 @@ exports.show = function(req, res) {
     { email: req.params.encrypted_email }
   , function (err, address) {
     if (err)
-      res.json(err);
+      res.json(404, err);
+    else if (!address)
+      res.json(404, {error: "Not found"})
     else
       res.json(address);
   });

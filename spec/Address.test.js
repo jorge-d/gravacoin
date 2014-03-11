@@ -8,35 +8,56 @@ var app = require('../app');
 
 var Address = mongoose.model('Address');
 
+before(function (done) {
+  require('./helper').clearDb(done)
+})
+after(function(done) {
+  process.exit(0);
+})
+
 describe('Address', function() {
+  var default_address = new Address({
+    email: 'foobar@example.com'
+  })
 
+  before(function (done) {
+    default_address.save(done)
+  })
+
+  describe('model', function() {
+
+  });
   describe('routes', function() {
-    var params = {
-      email: 'los_locos_rocos@yopmail.fr'
-    };
+    describe('POST /addresses', function() {
+      var params = {
+        email: 'los_locos_rocos@yopmail.fr'
+      };
 
-    it('saves addresses correctly', function(done) {
-      request(app)
-        .post('/addresses')
-        .send(params)
-        .end(function(err, res) {
-          if (err) {
-            throw err;
-          }
-          res.should.have.status(200);
-          done();
-        });
+      it('saves addresses correctly', function(done) {
+        request(app)
+          .post('/addresses')
+          .send(params)
+          .end(function(err, res) {
+            if (err) {
+              throw err;
+            }
+            res.should.have.status(200);
+            done();
+          });
+      });
+
+      it('should return error trying to save duplicate email', function(done) {
+        request(app)
+          .post('/addresses')
+          .send(params)
+          .end(function(err, res) {
+            res.should.have.status(400);
+            done();
+          });
+      });
     });
-    it('should return error trying to save duplicate email', function(done) {
-      request(app)
-        .post('/addresses')
-        .send(params)
-        .end(function(err, res) {
-          res.should.have.status(400);
-          done();
-        });
-    });
-    it('lists existing addresses', function(done) {
+
+    it('GET /addresses', function(done) {
       request(app)
         .get('/addresses')
         .end(function(err, res) {
@@ -49,12 +70,28 @@ describe('Address', function() {
           })
         });
     });
-  });
 
-  after(function (done) {
-    require('./helper').clearDb(done)
-  })
-  after(function(done) {
-    process.exit(0);
-  })
+    describe('GET /addresses/:encrypted_email', function() {
+      it('with existing record', function(done) {
+        request(app)
+          .get('/addresses/' + default_address.email)
+          .end(function(err, res) {
+            if (err) throw err;
+
+            res.should.have.status(200);
+            done()
+          });
+      });
+      it('returns_error if invalid', function(done) {
+        request(app)
+          .get('/addresses/record_that_does_not_exist')
+          .end(function(err, res) {
+            if (err) throw err;
+
+            res.should.have.status(404);
+            done()
+          });
+      });
+    });
+  });
 });
