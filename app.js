@@ -17,7 +17,7 @@ redis.on("connect", function() {
   console.log("Nohm Connected to Redis Client");
 });
 
-Address = require('./models/address')
+Address = require('./models/address');
 
 app = express();
 

@@ -26,7 +26,7 @@ exports.list = function(req, res) {
         }
       });
     });
-  })
+  });
 };
 exports.show = function(req, res) {
 }

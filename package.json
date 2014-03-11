@@ -12,5 +12,9 @@
     "redis": "^0.10.1",
     "nohm": "^0.9.5",
     "express-less-middleware": "^1.1.2"
+  },
+  "devDependencies": {
+    "mocha": "^1.17.1",
+    "gulp-mocha": "^0.4.1"
   }
 }
