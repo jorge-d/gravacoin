@@ -21,6 +21,7 @@ Address = require('./models/address')
 
 app = express();
 
+var lessCompiler = require( 'express-less-middleware' )( './public/' );
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -34,7 +35,8 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
-app.use(require('less-middleware')({ src: path.join(__dirname, 'public') }));
+app.use(lessCompiler);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only

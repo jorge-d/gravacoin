@@ -10,6 +10,7 @@
     "jade": "*",
     "less-middleware": "*",
     "redis": "^0.10.1",
-    "nohm": "^0.9.5"
+    "nohm": "^0.9.5",
+    "express-less-middleware": "^1.1.2"
   }
 }
