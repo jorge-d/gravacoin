@@ -11,7 +11,8 @@
     "less-middleware": "*",
     "redis": "^0.10.1",
     "nohm": "^0.9.5",
-    "express-less-middleware": "^1.1.2"
+    "express-less-middleware": "^1.1.2",
+    "mongoose": "^3.8.8"
   },
   "devDependencies": {
     "mocha": "^1.17.1",

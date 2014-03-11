@@ -4,40 +4,16 @@
  */
 
 var express = require('express');
-var routes = require('./routes');
-var address = require('./routes/address');
 var http = require('http');
 var path = require('path');
 
 // Load configurations
 // if test env, load example file
-var env = process.env.NODE_ENV || 'development'
-  , config = require('./config/config')[env]
-  , mongoose = require('mongoose')
+env = process.env.NODE_ENV || 'development'
+config = require('./config/config')[env]
 
-// Bootstrap db connection
-// Connect to mongodb
-var connect = function () {
-  var options = { server: { socketOptions: { keepAlive: 1 } } }
-  mongoose.connect(config.db, options)
-}
-connect()
-
-// Error handler
-mongoose.connection.on('error', function (err) {
-  console.log(err)
-})
-
-// Reconnect when closed
-mongoose.connection.on('disconnected', function () {
-  connect()
-})
-
-Address = require('./models/address');
-
+var db = require('./models/db')
 app = express();
-
-var lessCompiler = require( 'express-less-middleware' )( './public/' );
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -51,6 +27,8 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 app.use(express.session());
 app.use(app.router);
+
+var lessCompiler = require( 'express-less-middleware' )( './public/' );
 app.use(lessCompiler);
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -59,6 +37,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
+
+var routes = require('./routes');
+var address = require('./routes/address');
 
 app.get('/', routes.index);
 app.get('/addresses', address.list);
