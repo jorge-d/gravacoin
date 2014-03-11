@@ -8,10 +8,19 @@ var routes = require('./routes');
 var address = require('./routes/address');
 var http = require('http');
 var path = require('path');
-var redis = require('redis')
+
+nohm = require('nohm').Nohm;
+redis = require('redis').createClient();
+
+redis.on("connect", function() {
+  nohm.setClient(redis);
+  console.log("Nohm Connected to Redis Client");
+});
+
+Address = require('./models/address')
 
 app = express();
-db = redis.createClient();
+
 
 // all environments
 app.set('port', process.env.PORT || 3000);
