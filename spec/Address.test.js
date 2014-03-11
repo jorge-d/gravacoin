@@ -42,7 +42,7 @@ describe('Address', function() {
 
         res.should.have.status(200);
         Address.count(function (err, cnt) {
-          res.body.length.should == cnt;
+          res.body.length.should.eql(cnt);
           done()
         })
       });

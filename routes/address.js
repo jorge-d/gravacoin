@@ -23,15 +23,9 @@ exports.create = function(req, res) {
   var address = new Address({email: req.query.address});
   address.save(function (err) {
     if (err) {
-      console.log('Error:')
-      console.log(err);
-      res.send(400);
-      return;
+      res.send(400, err);
     }
-    else {
-      console.log('saved address! :-)');
-    }
-
-    res.send(200)
+    else
+      res.send(200)
   });
 }
