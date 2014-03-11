@@ -21,7 +21,8 @@ mongoose.connection.on('disconnected', function () {
 })
 
 mongoose.connection.on('connected', function () {
-  console.log('Mongoose default connection open');
+  if (config.db.debug)
+    console.log('Mongoose default connection open');
 });
 process.on('SIGINT', function() {
   mongoose.connection.close(function () {
