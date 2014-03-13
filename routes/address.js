@@ -21,7 +21,7 @@ exports.show = function(req, res) {
   });
 }
 exports.create = function(req, res) {
-  var address = new Address({email: req.body.address});
+  var address = new Address({email: req.body.email});
   address.save(function (err) {
     if (err) {
       res.json(400, err);

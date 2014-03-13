@@ -29,6 +29,12 @@ describe('Address', function() {
         done();
       });
     });
+    it('generates a unique code', function(done) {
+      Address.findOne({email: default_address.email}, function(err, address) {
+        should.exist(address.validation_token);
+        done();
+      });
+    });
   });
   describe('routes', function() {
     describe('POST /addresses', function() {
@@ -36,6 +42,12 @@ describe('Address', function() {
         email: 'los_locos_rocos@yopmail.fr'
       };
 
+      it('fails without email', function(done) {
+        request(app)
+          .post('/addresses')
+          .send({})
+          .expect(400, done)
+      });
       it('saves addresses correctly', function(done) {
         request(app)
           .post('/addresses')

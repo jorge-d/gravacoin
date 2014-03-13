@@ -13,7 +13,8 @@
     "nohm": "^0.9.5",
     "express-less-middleware": "^1.1.2",
     "mongoose": "^3.8.8",
-    "async": "^0.2.10"
+    "async": "^0.2.10",
+    "validator": "^3.5.0"
   },
   "devDependencies": {
     "mocha": "^1.17.1",
