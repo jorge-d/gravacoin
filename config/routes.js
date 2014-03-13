@@ -6,6 +6,7 @@ function setup(app) {
   app.get('/addresses', address.list);
   app.post('/addresses', address.create);
   app.get('/addresses/:encrypted_email', address.show);
+  app.get('/addresses/:encrypted_email/validate/:token', address.validate);
 }
 
 exports.setup = setup;

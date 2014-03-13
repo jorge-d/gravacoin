@@ -24,5 +24,18 @@ AddressSchema.pre('save', function(next) {
   next();
 })
 
+AddressSchema.methods = {
+  set_as_validated: function (callback) {
+    this.validated = true;
+    this.validated_at = Date.now();
+
+    this.save(function(err) {
+      if (err) throw err;
+
+      callback();
+    });
+  }
+}
+
 mongoose.model('Address', AddressSchema);
 
