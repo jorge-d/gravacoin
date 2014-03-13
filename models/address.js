@@ -1,7 +1,8 @@
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
   , crypto = require('crypto')
-  , validator = require('validator');
+  , validator = require('validator')
+  , mailer = require('../config/mailer');
 
 var AddressSchema = new Schema({
   'email': { type: String, validate: [validator.isEmail, 'an email is required'], index: { unique: true } },
@@ -21,6 +22,9 @@ AddressSchema.pre('save', function(next) {
   } catch (e) {
     throw "Error in address model - Crypto generation failed"
   }
+
+  text_message = "Your validation token is " + this.validation_token + " !"
+  mailer.send_validation(this.email, "Validate your address", text_message);
   next();
 })
 
