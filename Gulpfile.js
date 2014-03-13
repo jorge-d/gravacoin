@@ -23,11 +23,4 @@ gulp.task('develop', function () {
     })
 })
 
-gulp.task('mocha-tests', function () {
-    gulp.src(paths.tests)
-        .pipe(mocha({reporter: 'spec'}));
-});
-
-gulp.task('test', ['lint', 'mocha-tests']);
-
 gulp.task('default', ['lint', 'develop']);

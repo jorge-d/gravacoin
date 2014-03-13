@@ -14,9 +14,8 @@ require('./models/db')
 require('./config/express')(app, config);
 require('./config/routes').setup(app);
 
-app.listen(config.port, function() {
-  console.log('Express server listening on port ' + config.port);
-});
+app.listen(config.port);
+console.log('Express server listening on port ' + config.port);
 
 // expose app
 exports = module.exports = app;

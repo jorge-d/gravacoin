@@ -1,7 +1,6 @@
 var mongoose = require( 'mongoose' )
   , Address = mongoose.model('Address');
 
-
 exports.list = function(req, res) {
   Address.find({}, function(err, addresses) {
     if (err) throw err;
@@ -11,7 +10,7 @@ exports.list = function(req, res) {
 };
 exports.show = function(req, res) {
   Address.findOne(
-    { email: req.params.encrypted_email }
+    { encrypted_email: req.params.encrypted_email }
   , function (err, address) {
     if (err)
       res.json(404, err);
@@ -22,12 +21,12 @@ exports.show = function(req, res) {
   });
 }
 exports.create = function(req, res) {
-  var address = new Address({email: req.query.address});
+  var address = new Address({email: req.body.address});
   address.save(function (err) {
     if (err) {
-      res.send(400, err);
+      res.json(400, err);
     }
     else
-      res.send(200)
+      res.json(200, {message: "Created ! Address now waiting for validation."});
   });
 }

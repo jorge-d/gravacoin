@@ -9,20 +9,16 @@ var crypto = require('crypto');
 
 var Address = mongoose.model('Address');
 
-after(function(done) {
-  process.exit(0);
-})
-
 describe('Address', function() {
+  var default_address;
+
   before(function (done) {
     require('./helper').clearDb(done)
   })
-
-  var default_address = new Address({
-    email: 'foobar@example.com'
-  })
-
   before(function (done) {
+    default_address = new Address({
+      email: 'foobar@example.com'
+    });
     default_address.save(done)
   })
 
@@ -44,11 +40,10 @@ describe('Address', function() {
         request(app)
           .post('/addresses')
           .send(params)
+          .expect(200)
           .end(function(err, res) {
-            if (err) {
-              throw err;
-            }
-            res.should.have.status(200);
+            if (err) throw err;
+
             done();
           });
       });
@@ -57,6 +52,7 @@ describe('Address', function() {
         request(app)
           .post('/addresses')
           .send(params)
+          .expect(404)
           .end(function(err, res) {
             res.should.have.status(400);
             done();
@@ -67,10 +63,10 @@ describe('Address', function() {
     it('GET /addresses', function(done) {
       request(app)
         .get('/addresses')
+        .expect(200)
         .end(function(err, res) {
           if (err) throw err;
 
-          res.should.have.status(200);
           Address.count(function (err, cnt) {
             res.body.length.should.eql(cnt);
             done()
@@ -82,23 +78,24 @@ describe('Address', function() {
       it('with existing record', function(done) {
         request(app)
           .get('/addresses/' + default_address.encrypted_email)
+          .expect(200)
           .end(function(err, res) {
             if (err) throw err;
 
-            res.should.have.status(200);
             done()
           });
       });
       it('returns_error if invalid', function(done) {
         request(app)
           .get('/addresses/record_that_does_not_exist')
+          .expect(404)
           .end(function(err, res) {
             if (err) throw err;
 
-            res.should.have.status(404);
             done()
           });
       });
     });
   });
 });
+

@@ -15,7 +15,8 @@ var AddressSchema = new Schema({
 AddressSchema.pre('save', function(next) {
   if (!this.isNew) return next()
 
-  this.encrypted_email = crypto.createHash('md5').update(this.email).digest("hex");
+  if (this.email)
+    this.encrypted_email = crypto.createHash('md5').update(this.email).digest("hex");
   next();
 })
 
