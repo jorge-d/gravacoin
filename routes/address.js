@@ -2,11 +2,24 @@ var mongoose = require( 'mongoose' )
   , Currency = mongoose.model('Currency')
   , Address = mongoose.model('Address');
 
-exports.list = function(req, res) {
-  Address.find({}, function(err, addresses) {
+function fetch_currency(req, res, callback) {
+  Currency.findOne(
+    {symbol: req.params.currency}
+  , function(err, currency) {
     if (err) throw err;
 
-    res.json(addresses);
+    if (currency) callback(currency);
+    else res.json(400, {error: 'Currency not found'})
+  });
+}
+
+exports.list = function(req, res) {
+  fetch_currency(req, res, function(currency) {
+    Address.find({currency: currency._id}, function(err, addresses) {
+      if (err) throw err;
+
+      res.json(addresses);
+    });
   });
 };
 exports.show = function(req, res) {
@@ -23,7 +36,8 @@ exports.show = function(req, res) {
 }
 exports.create = function(req, res) {
   var address = new Address({email: req.body.email});
-  Currency.findOne({symbol: 'ltc'}, function(err, currency) {
+
+  Currency.findOne({symbol: req.params.currency}, function(err, currency) {
     if (err) throw err;
 
     if (currency) {

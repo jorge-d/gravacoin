@@ -12,7 +12,8 @@
     "mongoose": "^3.8.8",
     "async": "^0.2.10",
     "validator": "^3.5.0",
-    "nodemailer": "^0.6.1"
+    "nodemailer": "^0.6.1",
+    "express-namespace": "^0.1.1"
   },
   "devDependencies": {
     "mocha": "^1.17.1",

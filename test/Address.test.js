@@ -12,24 +12,30 @@ var Currency = mongoose.model('Currency');
 
 describe('Address', function() {
   var default_address;
-  var default_currency;
+  var litecoin;
+  var bitcoin;
 
   before(function (done) {
     require('./helper').clearDb(done)
   })
   before(function (done) {
-    default_currency = new Currency({
+    litecoin = new Currency({
       symbol: 'ltc',
       name: 'litecoin'
+    });
+    bitcoin = new Currency({
+      symbol: 'btc',
+      name: 'bitcoin'
     });
     default_address = new Address({
       email: 'foobar@example.com'
     });
 
-    default_currency.save(function(err) {
-      if (err) throw err;
-      default_address.currency = default_currency._id;
-      default_address.save(done)
+    litecoin.save(function() {
+      bitcoin.save(function() {
+        default_address.currency = litecoin._id;
+        default_address.save(done)
+      });
     })
   })
 
@@ -55,13 +61,13 @@ describe('Address', function() {
 
       it('fails without email', function(done) {
         request(app)
-          .post('/addresses')
+          .post('/api/' + litecoin.symbol + '/addresses')
           .send({})
           .expect(400, done)
       });
       it('saves addresses correctly', function(done) {
         request(app)
-          .post('/addresses')
+          .post('/api/' + litecoin.symbol + '/addresses')
           .send(params)
           .expect(200)
           .end(function(err, res) {
@@ -73,7 +79,7 @@ describe('Address', function() {
 
       it('should return error trying to save duplicate email', function(done) {
         request(app)
-          .post('/addresses')
+          .post('/api/' + litecoin.symbol + '/addresses')
           .send(params)
           .expect(404)
           .end(function(err, res) {
@@ -85,7 +91,7 @@ describe('Address', function() {
 
     it('GET /addresses', function(done) {
       request(app)
-        .get('/addresses')
+        .get('/api/' + litecoin.symbol + '/addresses')
         .expect(200)
         .end(function(err, res) {
           if (err) throw err;
@@ -100,7 +106,7 @@ describe('Address', function() {
     describe('GET /addresses/:encrypted_email', function() {
       it('with existing record', function(done) {
         request(app)
-          .get('/addresses/' + default_address.encrypted_email)
+          .get('/api/' + litecoin.symbol + '/addresses/' + default_address.encrypted_email)
           .expect(200)
           .end(function(err, res) {
             if (err) throw err;
@@ -110,7 +116,7 @@ describe('Address', function() {
       });
       it('returns_error if invalid', function(done) {
         request(app)
-          .get('/addresses/record_that_does_not_exist')
+          .get('/api/' + litecoin.symbol + '/addresses/record_that_does_not_exist')
           .expect(404)
           .end(function(err, res) {
             if (err) throw err;
@@ -122,7 +128,7 @@ describe('Address', function() {
     describe('GET /addresses/:encrypted_email/validate/:token', function() {
       it('validates the model', function(done) {
         request(app)
-          .get('/addresses/' + default_address.encrypted_email + '/validate/' + default_address.validation_token)
+          .get('/api/' + litecoin.symbol + '/addresses/' + default_address.encrypted_email + '/validate/' + default_address.validation_token)
           .expect(200)
           .end(function(err, res) {
             if (err) throw err;
@@ -132,7 +138,7 @@ describe('Address', function() {
               address.validated.should.eql(true);
 
               request(app)
-                .get('/addresses/' + default_address.encrypted_email + '/validate/' + default_address.validation_token)
+                .get('/api/' + litecoin.symbol + '/addresses/' + default_address.encrypted_email + '/validate/' + default_address.validation_token)
                 .expect(400)
                 .end(function(err, res) {
                   res.body.error.should.eql("Address already validated");
@@ -143,11 +149,11 @@ describe('Address', function() {
       });
       it('handles error correctly', function(done) {
         request(app)
-          .get('/addresses/' + default_address.encrypted_email + '/validate/invalid_token')
+          .get('/api/' + litecoin.symbol + '/addresses/' + default_address.encrypted_email + '/validate/invalid_token')
           .expect(400)
           .end(function(err, res) {
             request(app)
-              .get('/addresses/invalid_email/validate/random_token')
+              .get('/api/' + litecoin.symbol + '/addresses/invalid_email/validate/random_token')
               .expect(404, done)
           });
       });

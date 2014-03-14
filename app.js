@@ -3,6 +3,7 @@
  * Module dependencies.
  */
 
+var namespace = require('express-namespace');
 var express = require('express');
 
 // Load configurations
