@@ -25,7 +25,7 @@ exports.list = function(req, res) {
 
 exports.show_all = function(req, res) {
   Address.find({encrypted_email: req.params.encrypted_email}, function(err, addresses) {
-    if (err) throw err;
+    if (err) res.json(400, err);
     else res.json(addresses);
   });
 }

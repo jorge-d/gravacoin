@@ -11,50 +11,42 @@ var Address = mongoose.model('Address');
 var Currency = mongoose.model('Currency');
 
 describe('Address', function() {
-  var litecoin_address;
-  var litecoin;
-  var bitcoin;
-  var bitcoin_address;
+  var litecoin_address
+    , litecoin
+    , bitcoin
+    , bitcoin_address;
 
   before(function (done) {
     require('./helper').clearDb(done)
   })
   before(function (done) {
-    litecoin = new Currency({
-      symbol: 'ltc',
-      name: 'litecoin'
-    });
-    bitcoin = new Currency({
-      symbol: 'btc',
-      name: 'bitcoin'
-    });
-    litecoin_address = new Address({
-      email: 'foobar@example.com'
-    });
-    bitcoin_address = new Address({
-      email: 'ltc@example.com'
-    });
+    Currency.create(
+      { symbol: 'ltc', name: 'litecoin' }
+    , { symbol: 'btc', name: 'bitcoin' }
+    , function(err, ltc, btc) {
+      Address.create(
+        {email: 'foobar@example.com', currency: btc._id}
+      , {email: 'foobar@example.com', currency: ltc._id}
+      , function(err, btc_addr, ltc_addr) {
+        bitcoin_address = btc_addr;
+        litecoin_address = ltc_addr;
+        bitcoin = btc;
+        litecoin = ltc;
 
-    litecoin.save(function() {
-      bitcoin.save(function() {
-        litecoin_address.currency = litecoin._id;
-        litecoin_address.save(function() {
-          bitcoin_address.currency = bitcoin._id;
-          bitcoin_address.save(done);
-        });
+        done();
       });
-    })
+    });
   })
 
   describe('model', function() {
     it('encrypts email after save', function(done) {
-      Address.findOne({email: litecoin_address.email}, function(err, address) {
+      Address.search_by_email_and_currency(litecoin_address.email, litecoin._id, function(err, address) {
         address.encrypted_email.should.eql(crypto.createHash('md5').update(litecoin_address.email).digest("hex"));
         done();
       });
     });
     it('generates a unique code', function(done) {
-      Address.findOne({email: litecoin_address.email}, function(err, address) {
+      Address.search_by_email_and_currency(litecoin_address.email, litecoin._id, function(err, address) {
         should.exist(address.validation_token);
         done();
       });
@@ -91,11 +83,8 @@ describe('Address', function() {
         request(app)
           .post('/api/' + litecoin.symbol + '/addresses')
           .send(params)
-          .expect(404)
-          .end(function(err, res) {
-            res.should.have.status(400);
-            done();
-          });
+          .expect(400)
+          .end(done)
       });
       it('allows same email for different currencies', function(done) {
         request(app)
@@ -122,7 +111,7 @@ describe('Address', function() {
     });
 
     // SHOW
-    describe('GET /addresses/:encrypted_email', function() {
+    describe('GET /:symbol/addresses/:encrypted_email', function() {
       it('with existing record', function(done) {
         request(app)
           .get('/api/' + litecoin.symbol + '/addresses/' + litecoin_address.encrypted_email)
@@ -137,6 +126,21 @@ describe('Address', function() {
       });
     });
 
+    // SHOW ALL
+    it('GET /addresses/:encrypted_email', function(done) {
+      request(app)
+        .get('/api/addresses/' + litecoin_address.encrypted_email)
+        .expect(200)
+        .end(function(err, res) {
+          if (err) throw err;
+
+          Address.count({email: litecoin_address.email}, function(err, cnt) {
+            res.body.length.should.eql(cnt);
+            done();
+          })
+        });
+    });
+
     // VALIDATE
     describe('GET /addresses/:encrypted_email/validate/:token', function() {
       it('validates the model', function(done) {
@@ -146,7 +150,7 @@ describe('Address', function() {
           .end(function(err, res) {
             if (err) throw err;
 
-            Address.findOne({email: litecoin_address.email}, function(err, address) {
+            Address.search_by_email_and_currency(litecoin_address.email, litecoin._id, function(err, address) {
               should.exist(address.validated_at);
               address.validated.should.eql(true);
 
