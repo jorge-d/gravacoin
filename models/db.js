@@ -35,4 +35,5 @@ mongoose.set('debug', config.db.debug);
 
 // BRING IN YOUR SCHEMAS & MODELS
 // For example
+require('./currency');
 require('./address');

@@ -5,6 +5,12 @@ var mongoose = require('mongoose')
   , mailer = require('../config/mailer');
 
 var AddressSchema = new Schema({
+  'currency' : {
+    type : Schema.ObjectId,
+    ref : 'Currency',
+    required : true,
+    index : true
+  },
   'email': { type: String, validate: [validator.isEmail, 'an email is required'], index: { unique: true } },
   'encrypted_email': { type: String, validate: [validator.isAlphanumeric, 'encrypted_email is required'], index: { unique: true } },
   'validated': {type: Boolean, default: false},

@@ -5,8 +5,8 @@ var gulp = require('gulp')
   , mocha = require('gulp-mocha');
 
 var paths = {
-  scripts: ['./app.js', './models/*.js', 'public/javascript/*.js', 'routes/*.js', 'spec/*.js', 'config/*.js'],
-  tests: ['./spec/*.js']
+  scripts: ['./app.js', './models/*.js', 'public/javascript/*.js', 'routes/*.js', 'test/*.js', 'config/*.js'],
+  tests: ['./test/*.js']
 }
 gulp.task('lint', function() {
   gulp.src(paths.scripts)
@@ -16,7 +16,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('develop', function () {
-  nodemon({ script: 'app.js', ext: 'html js', ignore: ['spec/*', 'Gulpfile.js'] })
+  nodemon({ script: 'app.js', ext: 'html js', ignore: ['test/*', 'Gulpfile.js'] })
     .on('change', ['lint'])
     .on('restart', function () {
       console.log('restarted!')

@@ -1,4 +1,5 @@
 var mongoose = require( 'mongoose' )
+  , Currency = mongoose.model('Currency')
   , Address = mongoose.model('Address');
 
 exports.list = function(req, res) {
@@ -22,12 +23,19 @@ exports.show = function(req, res) {
 }
 exports.create = function(req, res) {
   var address = new Address({email: req.body.email});
-  address.save(function (err) {
-    if (err) {
-      res.json(400, err);
+  Currency.findOne({symbol: 'ltc'}, function(err, currency) {
+    if (err) throw err;
+
+    if (currency) {
+      address.currency = currency._id;
+      address.save(function (err) {
+        if (err) {
+          res.json(400, err);
+        }
+        else
+          res.json(200, {message: "Created ! Address now waiting for validation."});
+      });
     }
-    else
-      res.json(200, {message: "Created ! Address now waiting for validation."});
   });
 }
 

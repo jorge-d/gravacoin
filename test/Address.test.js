@@ -8,18 +8,29 @@ var app = require('../app');
 var crypto = require('crypto');
 
 var Address = mongoose.model('Address');
+var Currency = mongoose.model('Currency');
 
 describe('Address', function() {
   var default_address;
+  var default_currency;
 
   before(function (done) {
     require('./helper').clearDb(done)
   })
   before(function (done) {
+    default_currency = new Currency({
+      symbol: 'ltc',
+      name: 'litecoin'
+    });
     default_address = new Address({
       email: 'foobar@example.com'
     });
-    default_address.save(done)
+
+    default_currency.save(function(err) {
+      if (err) throw err;
+      default_address.currency = default_currency._id;
+      default_address.save(done)
+    })
   })
 
   describe('model', function() {
