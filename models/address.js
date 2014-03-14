@@ -20,25 +20,27 @@ var AddressSchema = new Schema({
 });
 
 AddressSchema.pre('save', function(next, done) {
-  if (!this.isNew) return next()
+  var self = this;
 
-  this.email = this.email.toLowerCase();
+  if (!self.isNew) return next()
+
+  self.email = self.email.toLowerCase();
   try {
-    this.validation_token = crypto.randomBytes(16).toString('hex');
-    this.encrypted_email = crypto.createHash('md5').update(this.email).digest("hex");
+    self.validation_token = crypto.randomBytes(16).toString('hex');
+    self.encrypted_email = crypto.createHash('md5').update(self.email).digest("hex");
   } catch (e) {
     throw "Error in address model - Crypto generation failed"
   }
 
-  mongoose.model('Address').search_by_email_and_currency(this.email, this.currency, function(err, match) {
+  mongoose.model('Address').search_by_email_and_currency(self.email, self.currency, function(err, match) {
     if (err) throw err;
 
     if (match)
       done(new Error("email must be unique for a given currency"));
     else {
       // Send valiodation mail
-      text_message = "Your validation token is " + this.validation_token + " !"
-      mailer.send_validation(this.email, "Validate your address", text_message);
+      text_message = "Your validation token is " + self.validation_token + " !"
+      mailer.send_validation(self.email, "Validate your address", text_message);
 
       next();
     }

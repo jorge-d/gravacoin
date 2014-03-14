@@ -22,6 +22,7 @@ module.exports.send_validation = function(to, subject, text, html) {
   if (config.send_emails) {
     smtpTransport.sendMail(mailOptions, function(error, response){
       if (error) {
+        console.log(mailOptions);
         console.log(error);
       } else {
         console.log("Message sent: " + response.message);
