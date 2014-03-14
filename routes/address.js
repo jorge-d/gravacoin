@@ -22,6 +22,14 @@ exports.list = function(req, res) {
     });
   });
 };
+
+exports.show_all = function(req, res) {
+  Address.find({encrypted_email: req.params.encrypted_email}, function(err, addresses) {
+    if (err) throw err;
+    else res.json(addresses);
+  });
+}
+
 exports.show = function(req, res) {
   fetch_currency(req, res, function(currency) {
     Address.search_by_encrypted_and_currency(
@@ -36,6 +44,7 @@ exports.show = function(req, res) {
     });
   });
 }
+
 exports.create = function(req, res) {
   fetch_currency(req, res, function(currency) {
     var address = new Address({email: req.body.email});
