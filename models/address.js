@@ -30,7 +30,7 @@ AddressSchema.pre('save', function(next, done) {
     throw "Error in address model - Crypto generation failed"
   }
 
-  mongoose.models["Address"].search_by_email_and_currency(this.email, this.currency, function(err, match) {
+  mongoose.model('Address').search_by_email_and_currency(this.email, this.currency, function(err, match) {
     if (err) throw err;
 
     if (match)
