@@ -11,6 +11,7 @@ module.exports = {
     app: {
       name: 'Nodejs Gravacoin'
     },
+    send_emails: true,
     port: 3000
   },
   test: {
@@ -22,6 +23,7 @@ module.exports = {
     app: {
       name: 'Nodejs Gravatest'
     },
+    send_emails: false,
     port: 4004
   },
   production: {}

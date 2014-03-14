@@ -19,7 +19,7 @@ module.exports.send_validation = function(to, subject, text, html) {
     html: html // html body
   }
 
-  if (env != 'test') {
+  if (config.send_emails) {
     smtpTransport.sendMail(mailOptions, function(error, response){
       if (error) {
         console.log(error);
@@ -27,9 +27,5 @@ module.exports.send_validation = function(to, subject, text, html) {
         console.log("Message sent: " + response.message);
       }
     });
-  }
-  else {
-    console.log("Message not sent because test mode :)")
-    console.log(mailOptions);
   }
 }
