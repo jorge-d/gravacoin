@@ -61,6 +61,9 @@ AddressSchema.methods = {
 AddressSchema.statics.search_by_email_and_currency = function(email, currency_id, cb) {
   return this.findOne({'email': email, currency: currency_id}).exec(cb);
 }
+AddressSchema.statics.search_by_encrypted_and_currency = function(encrypted_email, currency_id, cb) {
+  return this.findOne({'encrypted_email': encrypted_email, currency: currency_id}).exec(cb);
+}
 
 mongoose.model('Address', AddressSchema);
 
