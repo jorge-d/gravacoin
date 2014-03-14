@@ -32,8 +32,9 @@ exports.create = function(req, res) {
         if (err) {
           res.json(400, err);
         }
-        else
+        else {
           res.json(200, {message: "Created ! Address now waiting for validation."});
+        }
       });
     }
   });
