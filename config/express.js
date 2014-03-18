@@ -17,7 +17,9 @@ module.exports = function(app, config) {
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
 
+  app.use(require('less-middleware')(path.join(config.root, 'public')));
   app.use(express.static(config.root + '/public/'));
+  app.use(express.static(config.root + '/components/bootstrap/dist'));
 
   if (env == 'developement') {
     app.use(express.errorHandler());
