@@ -74,6 +74,9 @@ AddressSchema.statics.search_by_email_and_currency = function(email, currency_id
 AddressSchema.statics.search_by_encrypted_and_currency = function(encrypted_email, currency_id, cb) {
   return this.findOne({'encrypted_email': encrypted_email.toLowerCase(), currency: currency_id}).exec(cb);
 }
+AddressSchema.statics.search_validated_by_encrypted = function(encrypted_email, cb) {
+  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: true}).exec(cb);
+}
 
 mongoose.model('Address', AddressSchema);
 

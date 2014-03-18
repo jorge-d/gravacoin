@@ -84,3 +84,21 @@ exports.validate = function(req, res) {
     });
   });
 }
+
+exports.show_profile = function(req, res) {
+  Address.search_validated_by_encrypted(
+    req.params.hash
+  , function(err, addresses, ad) {
+    if (err) res.json(404, err);
+    else if (!addresses.length)
+      res.json(400, {error: "Empty"});
+    else
+      res.json(200, addresses);
+      // res.render('addresses/show', {
+      //   title: 'Articles',
+      //   articles: articles,
+      //   page: page + 1,
+      //   pages: Math.ceil(count / perPage)
+      // })
+  });
+}

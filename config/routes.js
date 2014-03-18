@@ -7,6 +7,8 @@ function setup(app) {
 
   app.get('/seed', currency.seed);
 
+  app.get('/:hash', address.show_profile);
+
   app.namespace('/api', function() {
     app.get('/currencies', currency.list);
     app.get('/addresses/:encrypted_email', address.show_all);
