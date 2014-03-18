@@ -43,7 +43,7 @@ describe('Address', function() {
     it('encrypts email after save', function(done) {
       Address.search_by_email_and_currency(litecoin_address.email, litecoin._id, function(err, address) {
         address.encrypted_email.should.eql(crypto.createHash('md5').update(litecoin_address.email).digest("hex"));
-        should(validator.isLowercase(address.encrypted_email)).ok;
+        validator.isLowercase(address.encrypted_email).should.be.ok;
         done();
       });
     });
@@ -70,7 +70,7 @@ describe('Address', function() {
           {email: 'some@one.fr', address: address, currency: bitcoin._id}
         , function(err, addr) {
           should.exist(err);
-          if (--count == 0) done();
+          if (--count === 0) done();
         });
       });
     });
