@@ -47,7 +47,7 @@ exports.show = function(req, res) {
 
 exports.create = function(req, res) {
   fetch_currency(req, res, function(currency) {
-    var address = new Address({email: req.body.email});
+    var address = new Address({email: req.body.email, address: req.body.address});
 
     address.currency = currency._id;
     address.save(function (err) {

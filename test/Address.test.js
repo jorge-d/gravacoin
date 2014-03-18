@@ -25,8 +25,8 @@ describe('Address', function() {
     , { symbol: 'btc', name: 'bitcoin' }
     , function(err, ltc, btc) {
       Address.create(
-        {email: 'foobar@example.com', currency: btc._id}
-      , {email: 'foobar@example.com', currency: ltc._id}
+        {email: 'foobar@example.com', currency: btc._id, address: '1W97yJxTfzYtYchzefxVPKqwoUb7Rx64M'}
+      , {email: 'foobar@example.com', currency: ltc._id, address: 'Lgs5HMfXMMHZA8wsmYtLb5XF8uTPHpq9Sa'}
       , function(err, btc_addr, ltc_addr) {
         bitcoin_address = btc_addr;
         litecoin_address = ltc_addr;
@@ -51,6 +51,18 @@ describe('Address', function() {
         done();
       });
     });
+    it('invalid addresses', function(done) {
+      var invalid_addresses = ['       a', 'dakjdwk', 'LQBGKmKAoxHGYre|k4EwF4g6Z2fyZ6wNSV', 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'];
+      var count = invalid_addresses.length;
+      invalid_addresses.forEach(function(address) {
+        Address.create(
+          {email: 'some@one.fr', address: address, currency: bitcoin._id}
+        , function(err, addr) {
+          should.exist(err);
+          if (--count == 0) done();
+        });
+      });
+    });
   });
   describe('routes', function() {
     it('needs currency to exist', function(done) {
@@ -62,13 +74,20 @@ describe('Address', function() {
     // CREATE
     describe('POST /addresses', function() {
       var params = {
-        email: 'los_locos_rocos@yopmail.fr'
+        email: 'los_locos_rocos@yopmail.fr',
+        address: 'LQBGKmKAoxHGYre7k4EwF4g6Z2fyZ6wNSV'
       };
 
       it('fails without email', function(done) {
         request(app)
           .post('/api/' + litecoin.symbol + '/addresses')
-          .send({})
+          .send({address: params.address})
+          .expect(400, done)
+      });
+      it('fails without address', function(done) {
+        request(app)
+          .post('/api/' + litecoin.symbol + '/addresses')
+          .send({email: params.email})
           .expect(400, done)
       });
       it('saves addresses correctly', function(done) {

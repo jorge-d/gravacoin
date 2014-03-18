@@ -4,6 +4,11 @@ var mongoose = require('mongoose')
   , validator = require('validator')
   , mailer = require('../config/mailer');
 
+
+function validateAddress(str) {
+  return validator.isAlphanumeric(str) && validator.isLength(str, 10, 50)
+}
+
 var AddressSchema = new Schema({
   'currency' : {
     type : Schema.ObjectId,
@@ -11,7 +16,8 @@ var AddressSchema = new Schema({
     required : true,
     index : true
   },
-  'email': { type: String, lowercase: true, validate: [validator.isEmail, 'an email is required']},
+  'address': { type: String, trim: true, required: true, validate: [validateAddress, 'Bad syntax']},
+  'email': { type: String, trim: true, lowercase: true, validate: [validator.isEmail, 'an email is required']},
   'encrypted_email': { type: String, validate: [validator.isAlphanumeric, 'encrypted_email is required']},
   'validated': {type: Boolean, default: false},
   'created_at': {type: Date, default: Date.now},
@@ -22,9 +28,11 @@ var AddressSchema = new Schema({
 AddressSchema.pre('save', function(next, done) {
   var self = this;
 
+  // Return if it's a save instead of a create
   if (!self.isNew) return next()
 
   self.email = self.email.toLowerCase();
+
   try {
     self.validation_token = crypto.randomBytes(16).toString('hex');
     self.encrypted_email = crypto.createHash('md5').update(self.email).digest("hex");
@@ -38,7 +46,7 @@ AddressSchema.pre('save', function(next, done) {
     if (match)
       done(new Error("email must be unique for a given currency"));
     else {
-      // Send valiodation mail
+      // Send validation mail
       text_message = "Your validation token is " + self.validation_token + " !"
       mailer.send_validation(self.email, "Validate your address", text_message);
 
