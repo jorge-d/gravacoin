@@ -18,7 +18,7 @@ var AddressSchema = new Schema({
   },
   'address': { type: String, trim: true, required: true, validate: [validateAddress, 'Bad syntax']},
   'email': { type: String, trim: true, lowercase: true, validate: [validator.isEmail, 'an email is required']},
-  'encrypted_email': { type: String, validate: [validator.isAlphanumeric, 'encrypted_email is required']},
+  'encrypted_email': { type: String, lowercase: true, validate: [validator.isAlphanumeric, 'encrypted_email is required']},
   'validated': {type: Boolean, default: false},
   'created_at': {type: Date, default: Date.now},
   'validated_at': {type: Date, default: null},
@@ -69,10 +69,10 @@ AddressSchema.methods = {
 }
 
 AddressSchema.statics.search_by_email_and_currency = function(email, currency_id, cb) {
-  return this.findOne({'email': email, currency: currency_id}).exec(cb);
+  return this.findOne({'email': email.toLowerCase(), currency: currency_id}).exec(cb);
 }
 AddressSchema.statics.search_by_encrypted_and_currency = function(encrypted_email, currency_id, cb) {
-  return this.findOne({'encrypted_email': encrypted_email, currency: currency_id}).exec(cb);
+  return this.findOne({'encrypted_email': encrypted_email.toLowerCase(), currency: currency_id}).exec(cb);
 }
 
 mongoose.model('Address', AddressSchema);

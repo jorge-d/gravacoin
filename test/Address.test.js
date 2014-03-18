@@ -6,6 +6,7 @@ var request = require('supertest');
 var mongoose = require('mongoose');
 var app = require('../app');
 var crypto = require('crypto');
+var validator = require('validator');
 
 var Address = mongoose.model('Address');
 var Currency = mongoose.model('Currency');
@@ -42,12 +43,22 @@ describe('Address', function() {
     it('encrypts email after save', function(done) {
       Address.search_by_email_and_currency(litecoin_address.email, litecoin._id, function(err, address) {
         address.encrypted_email.should.eql(crypto.createHash('md5').update(litecoin_address.email).digest("hex"));
+        should(validator.isLowercase(address.encrypted_email)).ok;
         done();
       });
     });
     it('generates a unique code', function(done) {
       Address.search_by_email_and_currency(litecoin_address.email, litecoin._id, function(err, address) {
         should.exist(address.validation_token);
+        done();
+      });
+    });
+    it('case insensitive email', function(done) {
+      Address.create(
+        {email: 'RanDomEmail@example.Com', currency: bitcoin._id, address: bitcoin_address.address}
+      , {email: 'randomemail@example.com', currency: litecoin._id, address: litecoin_address.address}
+      , function(err, addr_1, addr_2) {
+        addr_1.encrypted_email.should.eql(addr_2.encrypted_email);
         done();
       });
     });
@@ -134,6 +145,12 @@ describe('Address', function() {
       it('with existing record', function(done) {
         request(app)
           .get('/api/' + litecoin.symbol + '/addresses/' + litecoin_address.encrypted_email)
+          .expect(200)
+          .end(done)
+      });
+      it('is case insensitive', function(done) {
+        request(app)
+          .get('/api/' + litecoin.symbol + '/addresses/' + litecoin_address.encrypted_email.toUpperCase())
           .expect(200)
           .end(done)
       });
