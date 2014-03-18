@@ -75,7 +75,12 @@ describe('Address', function() {
       });
     });
   });
-  describe('routes', function() {
+
+  describe('webpages routes', function() {
+
+  });
+
+  describe('api routes', function() {
     it('needs currency to exist', function(done) {
       request(app)
         .get('/api/undefined_currency/addresses')
