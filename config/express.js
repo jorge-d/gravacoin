@@ -17,9 +17,6 @@ module.exports = function(app, config) {
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
 
-  var lessCompiler = require( 'express-less-middleware' )( config.root + '/public/' );
-  app.use(lessCompiler);
-
   app.use(express.static(config.root + '/public/'));
 
   if (env == 'developement') {

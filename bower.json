@@ -1,0 +1,11 @@
+{
+  "name": "gravacoin",
+  "version": "1.0.0",
+  "homepage": "https://github.com/jorge-d/gravacoin",
+  "authors": [
+    "Dimitri Jorge <jorge.dimitri@gmail.com>"
+  ],
+  "description": "Like gravatar, for coins !",
+  "license": "MIT",
+  "private": true
+}
