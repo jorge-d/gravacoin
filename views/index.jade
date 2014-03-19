@@ -1,5 +1,78 @@
 extends layout
 
+block header
+  .container
+    .row
+      .col-lg-8
+        h1
+          | Bring your crypto addresses
+          br
+          | Everywere.
+        a.button.btn.btn-info.btn-lg(href='#how_it_works') How does it work?
+      .col-lg-4
+        img.img-responsive(src='/images/ipad-hand.png', alt='')
+
+
 block content
-  h1= title
-  p Welcome to #{title}
+  #how_it_works.container
+    .row.mt.centered
+      .col-lg-6.col-lg-offset-3
+        h1
+          | List all your addresses
+          br
+          | No registration required.
+        h3
+          | Because raw text in github readme's are so 2013.
+
+    .row.mt.centered
+      .col-lg-4
+        img(src='/images/ser01.png', width='180', alt='')
+        h4 1 - Register your address
+        p
+          | Use our API to send your address
+      .col-lg-4
+        img(src='/images/ser02.png', width='180', alt='')
+        h4 2 - Receive a confirmation code
+        p
+          | Use this code to confirm your address
+      .col-lg-4
+        img(src='/images/ser03.png', width='180', alt='')
+        h4 3 - That's it
+        p
+          | Your newly registered address appears on your profile page
+
+    .row.mt.centered
+      h3 You can then embed you address anywhere using our widget !
+
+  .container
+    hr
+
+  #documentation.container
+    .row.mt.centered
+      .col-lg-6.col-lg-offset-3
+        h1 API
+
+  .container
+    hr
+
+  #about.container
+    .row.mt.centered
+      .col-lg-6.col-lg-offset-3
+        h1 About
+      .row.mt.centered
+        .col-lg-4.col-lg-offset-4
+          img.img-circle(src='http://www.gravatar.com/avatar/458641ed4b2725b16edbf0192ca0b2f2', width='140', alt='')
+          h4 Dimitri Jorge
+          p
+            | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.
+          p
+            i.glyphicon.glyphicon-send
+            i.glyphicon.glyphicon-phone
+            i.glyphicon.glyphicon-globe
+
+  .container
+    hr
+    p.centered
+      a(href="http://blacktie.co", tile="blacktie") Theme by BlackTie.co
+
+

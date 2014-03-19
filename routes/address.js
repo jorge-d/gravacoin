@@ -93,12 +93,9 @@ exports.show_profile = function(req, res) {
     else if (!addresses.length)
       res.json(400, {error: "Empty"});
     else
-      res.json(200, addresses);
-      // res.render('addresses/show', {
-      //   title: 'Articles',
-      //   articles: articles,
-      //   page: page + 1,
-      //   pages: Math.ceil(count / perPage)
-      // })
+      res.render('addresses/show', {
+        title: 'Gravacoin',
+        addresses: addresses
+      })
   });
 }

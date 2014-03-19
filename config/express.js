@@ -20,6 +20,7 @@ module.exports = function(app, config) {
   app.use(require('less-middleware')(path.join(config.root, 'public')));
   app.use(express.static(config.root + '/public/'));
   app.use(express.static(config.root + '/components/bootstrap/dist'));
+  app.use(express.static(config.root + '/components/jquery/dist'));
 
   if (env == 'developement') {
     app.use(express.errorHandler());
