@@ -20,7 +20,6 @@ exports.show = function(req, res) {
     else
       res.json(currency);
   });
-
 }
 
 exports.seed = function(req, res) {

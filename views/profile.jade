@@ -10,11 +10,14 @@ block header
       .col-lg-10
         table.table.table-hover
           tr
-            th legend
+            th Currency
             th Address
             th &nbsp;
           tr(ng-repeat="it in addresses")
-            td Placeholder
+            td
+              img(ng-src="/images/{{it.currency.symbol || 'empty'}}.png")
+              &nbsp;
+              {{it.currency.symbol}}
             td {{it.address}}
             td
               button.btn.btn-info(class="copy-button pull-right", data-address="{{it.address}}", clip-copy="it.address", clip-click="handleClick(it.address)", title="Click to clipboard")

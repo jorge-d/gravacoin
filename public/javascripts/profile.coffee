@@ -5,13 +5,21 @@ app.config(['ngClipProvider', (ngClipProvider)->
 ]);
 app.factory('Address', ['$resource',
   ($resource)->
-    $resource('api/addresses/:hash', {hash: '@hash'}, {
+    $resource('/api/addresses/:hash', {hash: '@hash'}, {
       query: {method:'GET', isArray:true}
     });
-  ]);
+  ]
+);
+app.factory('Currency', ['$resource',
+  ($resource)->
+    $resource('/api/currencies/:id', {id: '@id'}, {
+      query: {method:'GET', isArray:true}
+    });
+  ]
+);
 
-app.controller('CurrencyCtrl', ['$scope', '$location', 'Address', ($scope, $location, Address)->
-  # $scope.client = new ZeroClipboard()
+app.controller('CurrencyCtrl', ['$scope', '$location', 'Address', 'Currency', ($scope, $location, Address, Currency)->
+  $scope.currencies = {}
 
   $scope.handleClick = (address)->
     current = $("button[data-address=#{address}]")
@@ -20,7 +28,10 @@ app.controller('CurrencyCtrl', ['$scope', '$location', 'Address', ($scope, $loca
     current.find('.glyphicon').removeClass('hidden')
     return
 
-  $scope.$watch 'hash', ->
-    $scope.addresses = Address.query {hash: $scope.hash}
+  fetchCurrencies = (addresses)->
+    for address in addresses
+      address.currency = Currency.get({}, id: address.currency)
 
+  $scope.$watch 'hash', ->
+    $scope.addresses = Address.query {hash: $scope.hash}, fetchCurrencies
 ]);
