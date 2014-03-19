@@ -17,7 +17,7 @@ block header
             td
               img(ng-src="/images/{{it.currency.symbol || 'empty'}}.png")
               &nbsp;
-              {{it.currency.symbol}}
+              {{it.currency.name}}
             td {{it.address}}
             td
               button.btn.btn-info(class="copy-button pull-right", data-address="{{it.address}}", clip-copy="it.address", clip-click="handleClick(it.address)", title="Click to clipboard")
