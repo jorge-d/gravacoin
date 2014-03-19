@@ -11,6 +11,7 @@ function setup(app) {
 
   app.namespace('/api', function() {
     app.get('/currencies', currency.list);
+    app.get('/currencies/:id', currency.show);
     app.get('/addresses/:encrypted_email', address.show_all);
 
     app.namespace('/:currency', function() {
