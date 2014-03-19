@@ -22,6 +22,9 @@ module.exports = function(app, config) {
   app.use(express.static(config.root + '/components/bootstrap/dist'));
   app.use(express.static(config.root + '/components/jquery/dist'));
   app.use(express.static(config.root + '/components/zeroclipboard'));
+  app.use(express.static(config.root + '/components/angular'));
+  app.use(express.static(config.root + '/components/angular-resource'));
+  app.use(express.static(config.root + '/components/ng-clip/dest'));
 
   if (env == 'developement') {
     app.use(express.errorHandler());

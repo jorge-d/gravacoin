@@ -1,24 +1,23 @@
 extends layout
 
 block header
-  .container.push--top.profil-page
-    .row
+  script(src='/javascripts/profile.js')
+
+  .container.push--top.profil-page(ng-app="app")
+    .row(ng-controller="CurrencyCtrl")
       .col-lg-2
-        img.img-circle(src='http://www.gravatar.com/avatar/' + hash, width='140', alt='')
+        img.img-circle(src='http://www.gravatar.com/avatar/' + hash, width='140', alt='', ng-init="hash='#{hash}';")
       .col-lg-10
         table.table.table-hover
           tr
-            th Currency
+            th legend
             th Address
             th &nbsp;
-          - for (var i = 0; i < addresses.length; ++i) {
-            - var address = addresses[i].address
-            tr
-              td Placeholder
-              td= address
-              td
-                button.btn.btn-info(class="copy-button pull-right", data-clipboard-text=address, title="Click to clipboard")
-                    span.legend Copy to Clipboard
-                    span.glyphicon.glyphicon-check.hidden
-          - }
+          tr(ng-repeat="it in addresses")
+            td Placeholder
+            td {{it.address}}
+            td
+              button.btn.btn-info(class="copy-button pull-right", data-address="{{it.address}}", clip-copy="it.address", clip-click="handleClick(it.address)", title="Click to clipboard")
+                span.legend Copy to Clipboard
+                span.glyphicon.glyphicon-check.hidden
 
