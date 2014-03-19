@@ -21,6 +21,7 @@ module.exports = function(app, config) {
   app.use(express.static(config.root + '/public/'));
   app.use(express.static(config.root + '/components/bootstrap/dist'));
   app.use(express.static(config.root + '/components/jquery/dist'));
+  app.use(express.static(config.root + '/components/zeroclipboard'));
 
   if (env == 'developement') {
     app.use(express.errorHandler());

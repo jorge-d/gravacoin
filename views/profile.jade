@@ -1,15 +1,20 @@
 extends layout
 
 block header
-  .container.push--top
+  .container.push--top.profil-page
     .row
       .col-lg-2
         img.img-circle(src='http://www.gravatar.com/avatar/' + hash, width='140', alt='')
       .col-lg-10
         h1 Addresses
-        .well.well-lg
-          ul
-            - for (var i = 0; i < addresses.length; ++i) {
-              li= addresses[i].address
-            - }
+        ul.list-unstyled
+          - for (var i = 0; i < addresses.length; ++i) {
+            - var address = addresses[i].address
+            li.well.well-sm
+              p
+                = address
+                button.btn.btn-info(class="copy-button pull-right", data-clipboard-text=address, title="Click to clipboard")
+                    span.legend Copy to Clipboard
+                    span.glyphicon.glyphicon-check.hidden
+          - }
 

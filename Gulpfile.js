@@ -14,7 +14,7 @@ var paths = {
 gulp.task('coffee', function() {
   gulp.src('./public/javascripts/*.coffee')
     .pipe(coffee({bare: true}).on('error', gutil.log))
-    .pipe(gulp.dest('./public//javascripts'))
+    .pipe(gulp.dest('./public/javascripts'))
 });
 
 gulp.task('lint', function() {
@@ -25,8 +25,8 @@ gulp.task('lint', function() {
 });
 
 gulp.task('develop', function () {
-  nodemon({ script: 'app.js', ext: 'html js', ignore: ['test/*', 'Gulpfile.js'] })
-    .on('change', ['lint'])
+  nodemon({ script: 'app.js', ext: 'html js coffee', ignore: ['test/*', 'Gulpfile.js'] })
+    .on('change', ['lint', 'coffee'])
     .on('restart', function () {
       console.log('restarted!')
     })
