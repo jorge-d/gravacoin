@@ -6,13 +6,17 @@ block header
       .col-lg-2
         img.img-circle(src='http://www.gravatar.com/avatar/' + hash, width='140', alt='')
       .col-lg-10
-        h1 Addresses
-        ul.list-unstyled
+        table.table.table-hover
+          tr
+            th Currency
+            th Address
+            th &nbsp;
           - for (var i = 0; i < addresses.length; ++i) {
             - var address = addresses[i].address
-            li.well.well-sm
-              p
-                = address
+            tr
+              td Placeholder
+              td= address
+              td
                 button.btn.btn-info(class="copy-button pull-right", data-clipboard-text=address, title="Click to clipboard")
                     span.legend Copy to Clipboard
                     span.glyphicon.glyphicon-check.hidden
