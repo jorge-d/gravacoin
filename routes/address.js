@@ -86,16 +86,18 @@ exports.validate = function(req, res) {
 }
 
 exports.show_profile = function(req, res) {
+  var hash = req.params.hash;
+
   Address.search_validated_by_encrypted(
-    req.params.hash
-  , function(err, addresses, ad) {
-    if (err) res.json(404, err);
-    else if (!addresses.length)
-      res.json(400, {error: "Empty"});
+    hash
+  , function(err, addresses) {
+    console.log(addresses);
+    if (err) res.send(404);
     else
-      res.render('addresses/show', {
+      res.render('profile', {
         title: 'Gravacoin',
-        addresses: addresses
+        addresses: addresses,
+        hash: hash
       })
   });
 }

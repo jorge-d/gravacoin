@@ -2,12 +2,21 @@
 var gulp = require('gulp')
   , nodemon = require('gulp-nodemon')
   , jshint = require('gulp-jshint')
-  , mocha = require('gulp-mocha');
+  , mocha = require('gulp-mocha')
+  , gutil = require('gulp-util')
+  , coffee = require('gulp-coffee');
 
 var paths = {
-  scripts: ['./app.js', './models/*.js', 'public/javascript/*.js', 'routes/*.js', 'config/*.js'],
+  scripts: ['./app.js', './models/*.js', 'public/javascripts/*.js', 'routes/*.js', 'config/*.js'],
   tests: ['./test/*.js']
 }
+
+gulp.task('coffee', function() {
+  gulp.src('./public/javascripts/*.coffee')
+    .pipe(coffee({bare: true}).on('error', gutil.log))
+    .pipe(gulp.dest('./public//javascripts'))
+});
+
 gulp.task('lint', function() {
   gulp.src(paths.scripts)
     .pipe(jshint({laxcomma: true, asi: true}))
@@ -23,4 +32,4 @@ gulp.task('develop', function () {
     })
 })
 
-gulp.task('default', ['lint', 'develop']);
+gulp.task('default', ['lint', 'coffee', 'develop']);

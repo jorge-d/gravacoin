@@ -8,7 +8,7 @@ module.exports = function(app, config) {
 
   app.set('views', path.join(config.root + '/views'));
   app.set('view engine', 'jade');
-  app.use(express.favicon());
+  // app.use(express.favicon());
 
   app.use(express.logger('dev'));
   app.use(express.json());

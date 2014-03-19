@@ -1,0 +1,15 @@
+extends layout
+
+block header
+  .container.push--top
+    .row
+      .col-lg-2
+        img.img-circle(src='http://www.gravatar.com/avatar/' + hash, width='140', alt='')
+      .col-lg-10
+        h1 Addresses
+        .well.well-lg
+          ul
+            - for (var i = 0; i < addresses.length; ++i) {
+              li= addresses[i].address
+            - }
+
