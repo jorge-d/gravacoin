@@ -37,9 +37,9 @@ app.factory('Currency', [
 app.controller('CurrencyCtrl', [
   '$scope', '$location', 'Address', 'Currency', function($scope, $location, Address, Currency) {
     $scope.currencies = {};
-    $scope.handleClick = function(address) {
+    $scope.handleClick = function(currency) {
       var current;
-      current = $("button[data-address=" + address + "]");
+      current = $("button[data-currency=" + currency + "]");
       current.removeClass('btn-info').addClass('btn-success');
       current.find('.legend').text("Copied !");
       current.find('.glyphicon').removeClass('hidden');

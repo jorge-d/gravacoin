@@ -21,8 +21,8 @@ app.factory('Currency', ['$resource',
 app.controller('CurrencyCtrl', ['$scope', '$location', 'Address', 'Currency', ($scope, $location, Address, Currency)->
   $scope.currencies = {}
 
-  $scope.handleClick = (address)->
-    current = $("button[data-address=#{address}]")
+  $scope.handleClick = (currency)->
+    current = $("button[data-currency=#{currency}]")
     current.removeClass('btn-info').addClass('btn-success')
     current.find('.legend').text("Copied !")
     current.find('.glyphicon').removeClass('hidden')
