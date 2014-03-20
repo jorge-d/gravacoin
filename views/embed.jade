@@ -10,22 +10,17 @@ html
     title Gravacoin
 
     link(rel='shortcut icon', href='/favicon.ico')
-
+    link(href='http://fonts.googleapis.com/css?family=Lato:300,400,900', rel='stylesheet', type='text/css')
+    link(rel='stylesheet', href='/stylesheets/embed.css')
   body
-    table
-      tr
-        td
-          a(href=address.currency.url, target="_blank", title="Go to #{address.currency.name} website")
-            img(src="/images/#{address.currency.symbol}.png")
-
-        td= address.currency.name
-        td
-          a(href="http://localhost:3000/#{address.encrypted_email}", target="_blank", title="See Gravacoin profile")
-            = address.address
-        td
-          button.btn.btn-info(class="copy-button", data-clipboard-text="#{address.address}", title="Click to clipboard")
-            span.legend Copy to Clipboard
-            span.glyphicon.glyphicon-check.hidden
+    .container
+      span.col.currency
+        img.inline(src="/images/#{address.currency.symbol}.png", width="18", height="18")
+      span.col.address
+        a(href="http://localhost:3000/#{address.encrypted_email}", target="_blank", title="See Gravacoin profile")= address.address
+      span.col.copy-button
+        button.btn.btn-info(class="copy-button", data-clipboard-text="#{address.address}", title="Click to clipboard")
+          span.legend Copy to Clipboard
 
     script(src="/ZeroClipboard.min.js")
     script.
