@@ -24,8 +24,16 @@ exports.list = function(req, res) {
 };
 
 exports.show_all = function(req, res) {
-  Address.find({encrypted_email: req.params.encrypted_email}, function(err, addresses) {
+  Address.search_by_encrypted_validated(req.params.encrypted_email, function(err, addresses) {
     if (err) res.json(400, err);
+    else if (addresses.length == 0) res.send('', 204);
+    else res.json(addresses);
+  });
+}
+exports.show_pending = function(req, res) {
+  Address.search_by_encrypted_not_validated(req.params.encrypted_email, function(err, addresses) {
+    if (err) res.json(400, err);
+    else if (addresses.length == 0) res.send('', 204);
     else res.json(addresses);
   });
 }

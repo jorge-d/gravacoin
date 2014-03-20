@@ -80,6 +80,12 @@ AddressSchema.statics.search_validated_by_encrypted = function(encrypted_email, 
 AddressSchema.statics.search_by_encrypted = function(encrypted_email, cb) {
   return this.find({encrypted_email: encrypted_email.toLowerCase()}).exec(cb);
 }
+AddressSchema.statics.search_by_encrypted_validated = function(encrypted_email, cb) {
+  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: true}).exec(cb);
+}
+AddressSchema.statics.search_by_encrypted_not_validated = function(encrypted_email, cb) {
+  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: false}).exec(cb);
+}
 
 mongoose.model('Address', AddressSchema);
 
