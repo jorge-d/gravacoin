@@ -1,0 +1,47 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='')
+    meta(name='author', content='Dimitri Jorge')
+
+    title Gravacoin
+
+    link(rel='shortcut icon', href='/favicon.ico')
+
+  body
+    table
+      tr
+        td
+          a(href=address.currency.url, target="_blank", title="Go to #{address.currency.name} website")
+            img(src="/images/#{address.currency.symbol}.png")
+
+        td= address.currency.name
+        td
+          a(href="http://localhost:3000/#{address.encrypted_email}", target="_blank", title="See Gravacoin profile")
+            = address.address
+        td
+          button.btn.btn-info(class="copy-button", data-clipboard-text="#{address.address}", title="Click to clipboard")
+            span.legend Copy to Clipboard
+            span.glyphicon.glyphicon-check.hidden
+
+    script(src="/ZeroClipboard.min.js")
+    script.
+      ZeroClipboard.config({
+        moviePath: '/ZeroClipboard.swf',
+        trustedDomains: ["*"],
+        allowScriptAccess: "always",
+        forceHandCursor: true
+      });
+      var client;
+      client = new ZeroClipboard(document.getElementsByClassName("copy-button"));
+      client.on("load", function(client) {
+        client.on("complete", function(client, args) {
+          console.log(args);
+          alert('Copied!');
+        });
+      });
+
+

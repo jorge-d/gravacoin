@@ -8,6 +8,7 @@ function setup(app) {
   app.get('/seed', currency.seed);
 
   app.get('/:hash', address.show_profile);
+  app.get('/:hash/:currency', address.show_embedable);
 
   app.namespace('/api', function() {
     app.get('/currencies', currency.list);

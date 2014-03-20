@@ -106,3 +106,20 @@ exports.show_profile = function(req, res) {
       })
   });
 }
+
+exports.show_embedable = function(req, res) {
+  fetch_currency(req, res, function(currency) {
+    Address.search_by_encrypted_and_currency(
+      req.params.hash
+    , currency
+    , function (err, address) {
+      if (err) throw err;
+      else if (!address)
+        res.send(404)
+      else
+        res.render('embed', {
+          address: address
+        });
+    });
+  });
+}
