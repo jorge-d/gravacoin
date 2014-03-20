@@ -26,6 +26,13 @@ app.controller('CurrencyCtrl', ['$scope', '$location', 'Address', 'Currency', ($
     current.removeClass('btn-info').addClass('btn-success')
     current.find('.legend').text("Copied !")
     current.find('.glyphicon').removeClass('hidden')
+
+    window.setInterval ()->
+        current.addClass('btn-info').removeClass('btn-success')
+        current.find('.legend').text("Copy to Clipboard")
+        current.find('.glyphicon').addClass('hidden')
+      , 2000
+
     return
 
   fetchCurrencies = (addresses)->

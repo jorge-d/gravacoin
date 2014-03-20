@@ -15,7 +15,8 @@ block header
             th &nbsp;
           tr(ng-repeat="it in addresses")
             td
-              img(ng-src="/images/{{it.currency.symbol || 'empty'}}.png")
+              a(href="{{it.currency.url}}", target="_blank", title="Go to {{it.currency.name}} website")
+                img(ng-src="/images/{{it.currency.symbol || 'empty'}}.png")
               &nbsp;
               {{it.currency.name}}
             td {{it.address}}

@@ -44,6 +44,11 @@ app.controller('CurrencyCtrl', [
       current.removeClass('btn-info').addClass('btn-success');
       current.find('.legend').text("Copied !");
       current.find('.glyphicon').removeClass('hidden');
+      window.setInterval(function() {
+        current.addClass('btn-info').removeClass('btn-success');
+        current.find('.legend').text("Copy to Clipboard");
+        return current.find('.glyphicon').addClass('hidden');
+      }, 2000);
     };
     fetchCurrencies = function(addresses) {
       var address, _i, _len, _results;
