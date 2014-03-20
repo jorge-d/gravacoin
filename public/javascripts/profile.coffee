@@ -35,10 +35,6 @@ app.controller('CurrencyCtrl', ['$scope', '$location', 'Address', 'Currency', ($
 
     return
 
-  fetchCurrencies = (addresses)->
-    for address in addresses
-      address.currency = Currency.get({}, id: address.currency)
-
   $scope.$watch 'hash', ->
-    $scope.addresses = Address.query {hash: $scope.hash}, fetchCurrencies
+    $scope.addresses = Address.query {hash: $scope.hash}
 ]);

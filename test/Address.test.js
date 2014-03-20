@@ -37,8 +37,8 @@ describe('Address', function() {
 
   before(function (done) {
     Address.create(
-      {email: 'foobar@example.com', currency: bitcoin._id, address: '1W97yJxTfzYtYchzefxVPKqwoUb7Rx64M'}
-    , {email: 'foobar@example.com', currency: litecoin._id, address: 'Lgs5HMfXMMHZA8wsmYtLb5XF8uTPHpq9Sa'}
+      {email: 'foobar@example.com', currency: bitcoin, address: '1W97yJxTfzYtYchzefxVPKqwoUb7Rx64M'}
+    , {email: 'foobar@example.com', currency: litecoin, address: 'Lgs5HMfXMMHZA8wsmYtLb5XF8uTPHpq9Sa'}
     , function(err, btc_addr, ltc_addr) {
       if (err) throw err;
 
@@ -51,22 +51,22 @@ describe('Address', function() {
 
   describe('model', function() {
     it('encrypts email after save', function(done) {
-      Address.search_by_email_and_currency(litecoin_address.email, litecoin._id, function(err, address) {
+      Address.search_by_email_and_currency(litecoin_address.email, litecoin, function(err, address) {
         address.encrypted_email.should.eql(crypto.createHash('md5').update(litecoin_address.email).digest("hex"));
         validator.isLowercase(address.encrypted_email).should.be.ok;
         done();
       });
     });
     it('generates a unique code', function(done) {
-      Address.search_by_email_and_currency(litecoin_address.email, litecoin._id, function(err, address) {
+      Address.search_by_email_and_currency(litecoin_address.email, litecoin, function(err, address) {
         should.exist(address.validation_token);
         done();
       });
     });
     it('case insensitive email', function(done) {
       Address.create(
-        {email: 'RanDomEmail@example.Com', currency: bitcoin._id, address: bitcoin_address.address}
-      , {email: 'randomemail@example.com', currency: litecoin._id, address: litecoin_address.address}
+        {email: 'RanDomEmail@example.Com', currency: bitcoin, address: bitcoin_address.address}
+      , {email: 'randomemail@example.com', currency: litecoin, address: litecoin_address.address}
       , function(err, addr_1, addr_2) {
         if (err) throw err;
         addr_1.encrypted_email.should.eql(addr_2.encrypted_email);
@@ -78,7 +78,7 @@ describe('Address', function() {
       var count = invalid_addresses.length;
       invalid_addresses.forEach(function(address) {
         Address.create(
-          {email: 'some@one.fr', address: address, currency: bitcoin._id}
+          {email: 'some@one.fr', address: address, currency: bitcoin}
         , function(err, addr) {
           should.exist(err);
           if (--count === 0) done();
@@ -149,7 +149,7 @@ describe('Address', function() {
         .end(function(err, res) {
           if (err) throw err;
 
-          Address.count({currency: litecoin._id}, function(err, cnt) {
+          Address.count({currency: litecoin}, function(err, cnt) {
             res.body.length.should.eql(cnt);
             done()
           })
@@ -184,9 +184,9 @@ describe('Address', function() {
 
       before(function(done) {
         Address.create(
-          {email: person.email, currency: bitcoin._id, address: '1W97yJxTfzYtYchzefxVPKqwoUb7Rx64M', validated: true}
-        , {email: person.email, currency: litecoin._id, address: 'Lgs5HMfXMMHZA8wsmYtLb5XF8uTPHpq9Sa', validated: true}
-        , {email: person.email, currency: dogecoin._id, address: 'Lgs5HMfXMMHZA8wsmYtLb5XF8uTPHpq9Sa'}
+          {email: person.email, currency: bitcoin, address: '1W97yJxTfzYtYchzefxVPKqwoUb7Rx64M', validated: true}
+        , {email: person.email, currency: litecoin, address: 'Lgs5HMfXMMHZA8wsmYtLb5XF8uTPHpq9Sa', validated: true}
+        , {email: person.email, currency: dogecoin, address: 'Lgs5HMfXMMHZA8wsmYtLb5XF8uTPHpq9Sa'}
         , function(err, btc_addr, ltc_addr, doge_addr) {
           if (err) throw err;
 
@@ -237,7 +237,7 @@ describe('Address', function() {
           .end(function(err, res) {
             if (err) throw err;
 
-            Address.search_by_email_and_currency(litecoin_address.email, litecoin._id, function(err, address) {
+            Address.search_by_email_and_currency(litecoin_address.email, litecoin, function(err, address) {
               should.exist(address.validated_at);
               address.validated.should.eql(true);
 

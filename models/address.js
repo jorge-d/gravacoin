@@ -40,6 +40,7 @@ AddressSchema.pre('save', function(next, done) {
     throw "Error in address model - Crypto generation failed"
   }
 
+  // Validate that this email is not already registered on this currency
   mongoose.model('Address').search_by_email_and_currency(self.email, self.currency, function(err, match) {
     if (err) throw err;
 
@@ -48,6 +49,7 @@ AddressSchema.pre('save', function(next, done) {
     else {
       // Send validation mail
       text_message = "Your validation token is " + self.validation_token + " !"
+
       mailer.send_validation(self.email, "Validate your address", text_message);
 
       next();
@@ -69,22 +71,22 @@ AddressSchema.methods = {
 }
 
 AddressSchema.statics.search_by_email_and_currency = function(email, currency_id, cb) {
-  return this.findOne({'email': email.toLowerCase(), currency: currency_id}).exec(cb);
+  return this.findOne({'email': email.toLowerCase(), currency: currency_id}).populate('currency').exec(cb);
 }
 AddressSchema.statics.search_by_encrypted_and_currency = function(encrypted_email, currency_id, cb) {
-  return this.findOne({'encrypted_email': encrypted_email.toLowerCase(), currency: currency_id}).exec(cb);
+  return this.findOne({'encrypted_email': encrypted_email.toLowerCase(), currency: currency_id}).populate('currency').exec(cb);
 }
 AddressSchema.statics.search_validated_by_encrypted = function(encrypted_email, cb) {
-  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: true}).exec(cb);
+  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: true}).populate('currency').exec(cb);
 }
 AddressSchema.statics.search_by_encrypted = function(encrypted_email, cb) {
-  return this.find({encrypted_email: encrypted_email.toLowerCase()}).exec(cb);
+  return this.find({encrypted_email: encrypted_email.toLowerCase()}).populate('currency').exec(cb);
 }
 AddressSchema.statics.search_by_encrypted_validated = function(encrypted_email, cb) {
-  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: true}).exec(cb);
+  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: true}).populate('currency').exec(cb);
 }
 AddressSchema.statics.search_by_encrypted_not_validated = function(encrypted_email, cb) {
-  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: false}).exec(cb);
+  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: false}).populate('currency').exec(cb);
 }
 
 mongoose.model('Address', AddressSchema);

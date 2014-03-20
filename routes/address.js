@@ -15,7 +15,7 @@ function fetch_currency(req, res, callback) {
 
 exports.list = function(req, res) {
   fetch_currency(req, res, function(currency) {
-    Address.find({currency: currency._id}, function(err, addresses) {
+    Address.find({currency: currency}, function(err, addresses) {
       if (err) throw err;
 
       res.json(addresses);
@@ -42,7 +42,7 @@ exports.show = function(req, res) {
   fetch_currency(req, res, function(currency) {
     Address.search_by_encrypted_and_currency(
       req.params.encrypted_email
-    , currency._id
+    , currency
     , function (err, address) {
       if (err) throw err;
       else if (!address)
@@ -57,7 +57,7 @@ exports.create = function(req, res) {
   fetch_currency(req, res, function(currency) {
     var address = new Address({email: req.body.email, address: req.body.address});
 
-    address.currency = currency._id;
+    address.currency = currency;
     address.save(function (err) {
       if (err) {
         res.json(400, err);
@@ -74,7 +74,7 @@ exports.validate = function(req, res) {
   fetch_currency(req, res, function(currency) {
     Address.search_by_encrypted_and_currency(
       req.params.encrypted_email
-    , currency._id
+    , currency
     , function (err, address) {
       if (err)
         res.json(404, err);

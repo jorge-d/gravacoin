@@ -36,7 +36,6 @@ app.factory('Currency', [
 
 app.controller('CurrencyCtrl', [
   '$scope', '$location', 'Address', 'Currency', function($scope, $location, Address, Currency) {
-    var fetchCurrencies;
     $scope.currencies = {};
     $scope.handleClick = function(address) {
       var current;
@@ -50,21 +49,10 @@ app.controller('CurrencyCtrl', [
         return current.find('.glyphicon').addClass('hidden');
       }, 2000);
     };
-    fetchCurrencies = function(addresses) {
-      var address, _i, _len, _results;
-      _results = [];
-      for (_i = 0, _len = addresses.length; _i < _len; _i++) {
-        address = addresses[_i];
-        _results.push(address.currency = Currency.get({}, {
-          id: address.currency
-        }));
-      }
-      return _results;
-    };
     return $scope.$watch('hash', function() {
       return $scope.addresses = Address.query({
         hash: $scope.hash
-      }, fetchCurrencies);
+      });
     });
   }
 ]);
