@@ -12,7 +12,7 @@ var smtpTransport = nodemailer.createTransport("SMTP",{
 module.exports.send_validation = function(to, subject, text, html) {
   // setup e-mail data with unicode symbols
   var mailOptions = {
-    from: "Gravacoin Admin ✔ <jorge.dimitri@gmail.com>", // sender address
+    from: "Gravacoin Admin ✔ <admin@gravaco.in>", // sender address
     to: to, // list of receivers
     subject: subject, // Subject line
     text: text, // plaintext body

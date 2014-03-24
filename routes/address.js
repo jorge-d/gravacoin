@@ -1,4 +1,5 @@
 var mongoose = require( 'mongoose' )
+  , request =  require('request')
   , Currency = mongoose.model('Currency')
   , Address = mongoose.model('Address');
 
@@ -107,19 +108,28 @@ exports.show_profile = function(req, res) {
   });
 }
 
-exports.show_embedable = function(req, res) {
+exports.show_basic_badge = function(req, res) {
+  Address.search_by_encrypted_validated(
+    req.params.hash
+  , function (err, address) {
+    var url = 'http://b.repl.ca/v1/Donate-coins-FFC83C.png'
+    if (err || address.length == 0)
+      url = 'http://b.repl.ca/v1/Gravacoin-not%20found-red.png'
+
+    request.get(url).pipe(res);
+  });
+}
+exports.show_currency_badge = function(req, res) {
   fetch_currency(req, res, function(currency) {
     Address.search_by_encrypted_and_currency(
       req.params.hash
     , currency
     , function (err, address) {
-      if (err) throw err;
-      else if (!address)
-        res.send(404)
-      else
-        res.render('embed', {
-          address: address
-        });
+      var url = 'http://b.repl.ca/v1/Donate-' + currency.name + '-FFC83C.png'
+      if (err || !address)
+        url = 'http://b.repl.ca/v1/Gravacoin-Address%20not%20found-red.png'
+
+      request.get(url).pipe(res);
     });
   });
 }
