@@ -58,9 +58,41 @@ block content
     hr
 
   #documentation.container
-    .row.mt.centered
-      .col-lg-6.col-lg-offset-3
-        h1 API
+    .row.mt
+      .col-lg-12
+        h3 Register an address
+
+        .well.well-lg
+          code.col-md-6
+            | $> curl -X POST http://gravaco.in/api/:symbol/addresses \
+            br
+            | -d "email=your_email" \
+            br
+            | -d 'address=your_address'
+          p.col-md-6
+            | Where symbol is the currency for which you register the address
+            br
+            | A full list of available currencies is available &nbsp;
+            a(href="/api/currencies") here
+          .clearfix &nbsp;
+      .col-lg-12
+        h3 Validate this address
+
+        .well.well-lg
+          code.col-md-6
+            | GET /api/:currency/addresses/:encrypted_email/validate/:token
+          p.col-md-6 Where token is a code you should have received by email
+          .clearfix &nbsp;
+
+      .col-lg-12
+        h3 See your profile
+
+        .well.well-lg
+          code.col-md-6 http://www.gravaco.in/HASH
+          p.col-md-6.
+            Your profile is then available at the following url
+            where HASH is your encrypted email (md5)
+          .clearfix &nbsp;
 
   .container
     hr
@@ -82,7 +114,12 @@ block content
 
   .container
     hr
-    p.centered
-      a(href="http://blacktie.co", tile="blacktie") Theme by BlackTie.co
+    row.centered
+      p.col-md-6
+        | Theme by &nbsp;
+        a(href="http://blacktie.co", tile="blacktie") BlackTie.co
+      p.col-md-6
+        | Inspired by &nbsp;
+        a(href="http://keybase.io", tile="keybase") Keybase.io
 
 
