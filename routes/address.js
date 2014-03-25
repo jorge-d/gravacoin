@@ -39,10 +39,9 @@ exports.show = function(req, res) {
     , currency
     , function (err, address) {
       if (err) throw err;
-      else if (!address)
-        res.json(404, {error: "Not found"})
-      else
-        res.json(address);
+      else if (!address) res.send(404, "Not found")
+      else if (!address.validated) res.send(400, "Address waiting for validation")
+      else res.end(address.address);
     });
   });
 }

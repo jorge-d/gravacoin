@@ -137,7 +137,7 @@ describe('Address', function() {
   describe('api routes', function() {
     it('needs currency to exist', function(done) {
       request(app)
-        .get('/api/undefined_currency/addresses/' + litecoin_address.encrypted_email)
+        .get('/api/undefined_currency/' + litecoin_address.encrypted_email)
         .expect(400, done)
     });
 
@@ -185,23 +185,29 @@ describe('Address', function() {
     });
 
     // SHOW
-    describe('GET /:symbol/addresses/:encrypted_email', function() {
+    describe('GET /:symbol/:encrypted_email', function() {
       it('with existing record', function(done) {
         request(app)
-          .get('/api/' + litecoin.symbol + '/addresses/' + litecoin_address.encrypted_email)
+          .get('/api/' + bitcoin.symbol + '/' + bitcoin_address.encrypted_email)
           .expect(200)
           .end(done)
       });
       it('is case insensitive', function(done) {
         request(app)
-          .get('/api/' + litecoin.symbol + '/addresses/' + litecoin_address.encrypted_email.toUpperCase())
+          .get('/api/' + bitcoin.symbol + '/' + bitcoin_address.encrypted_email.toUpperCase())
           .expect(200)
           .end(done)
       });
       it('returns_error if invalid', function(done) {
         request(app)
-          .get('/api/' + litecoin.symbol + '/addresses/record_that_does_not_exist')
+          .get('/api/' + bitcoin.symbol + '/record_that_does_not_exist')
           .expect(404)
+          .end(done)
+      });
+      it('returns_error if not validated', function(done) {
+        request(app)
+          .get('/api/' + litecoin.symbol + '/' + litecoin_address.encrypted_email)
+          .expect(400)
           .end(done)
       });
     });
