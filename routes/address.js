@@ -70,7 +70,7 @@ exports.update = function(req, res) {
         res.json(404, {error: "Not found"})
       else {
         address.change_address(req.body.new_address, function(err) {
-          if (err) res.json(400, err);
+          if (err) res.json(400, {error: "An error occured, maybe the new address is the same than the existing one?"});
           else {
             mailer.address_update(address, currency);
             res.json({message: "You should receive an email shortly containing a token and a link to validate the change"});
