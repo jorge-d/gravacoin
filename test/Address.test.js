@@ -263,10 +263,10 @@ describe('Address', function() {
     });
 
     // VALIDATE
-    describe('GET /addresses/:encrypted_email/validate/:token', function() {
+    describe('GET /:encrypted_email/validate/:token', function() {
       it('validates the model', function(done) {
         request(app)
-          .get('/api/' + litecoin.symbol + '/addresses/' + litecoin_address.encrypted_email + '/validate/' + litecoin_address.validation_token)
+          .get('/api/' + litecoin.symbol + '/' + litecoin_address.encrypted_email + '/validate/' + litecoin_address.validation_token)
           .expect(200)
           .end(function(err, res) {
             if (err) throw err;
@@ -276,7 +276,7 @@ describe('Address', function() {
               address.validated.should.eql(true);
 
               request(app)
-                .get('/api/' + litecoin.symbol + '/addresses/' + litecoin_address.encrypted_email + '/validate/' + litecoin_address.validation_token)
+                .get('/api/' + litecoin.symbol + '/' + litecoin_address.encrypted_email + '/validate/' + litecoin_address.validation_token)
                 .expect(400)
                 .end(function(err, res) {
                   res.body.error.should.eql("Address already validated");
@@ -287,22 +287,22 @@ describe('Address', function() {
       });
       it('handles error correctly', function(done) {
         request(app)
-          .get('/api/' + litecoin.symbol + '/addresses/' + litecoin_address.encrypted_email + '/validate/invalid_token')
+          .get('/api/' + litecoin.symbol + '/' + litecoin_address.encrypted_email + '/validate/invalid_token')
           .expect(400)
           .end(function(err, res) {
             request(app)
-              .get('/api/' + litecoin.symbol + '/addresses/invalid_email/validate/random_token')
+              .get('/api/' + litecoin.symbol + '/invalid_email/validate/random_token')
               .expect(404, done)
           });
       });
     });
 
     // UPDATE a validated address
-    it('PUT /api/:symbol/addresses/:encrypted_email/', function(done) {
+    it('PUT /api/:symbol/:encrypted_email/', function(done) {
       var new_address = '144107a75ad2cf5eeb32dfa62faa8b76';
 
       request(app)
-        .put('/api/' + bitcoin.symbol + '/addresses/' + bitcoin_address.encrypted_email)
+        .put('/api/' + bitcoin.symbol + '/' + bitcoin_address.encrypted_email)
         .send({new_address: new_address})
         .expect(200)
         .end(function(err, res) {
@@ -312,7 +312,7 @@ describe('Address', function() {
             address.pending_address.should.eql(new_address);
 
             request(app)
-              .get('/api/' + bitcoin.symbol + '/addresses/' + bitcoin_address.encrypted_email + '/validate_change/' + address.validation_token)
+              .get('/api/' + bitcoin.symbol + '/' + bitcoin_address.encrypted_email + '/validate_change/' + address.validation_token)
               .expect(200)
               .end(function(err, res) {
                 should.not.exist(err);

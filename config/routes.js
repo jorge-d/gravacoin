@@ -17,9 +17,9 @@ function setup(app) {
     app.namespace('/:currency', function() {
       app.post('/addresses', address.create);
       app.get('/:encrypted_email', address.show);
-      app.put('/addresses/:encrypted_email', address.update);
-      app.get('/addresses/:encrypted_email/validate/:token', address.validate);
-      app.get('/addresses/:encrypted_email/validate_change/:token', address.validate_address_change);
+      app.put('/:encrypted_email', address.update);
+      app.get('/:encrypted_email/validate/:token', address.validate);
+      app.get('/:encrypted_email/validate_change/:token', address.validate_address_change);
     });
   });
 }
