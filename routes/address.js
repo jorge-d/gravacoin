@@ -1,7 +1,8 @@
-var mongoose = require( 'mongoose' )
+var mongoose = require('mongoose')
   , request =  require('request')
   , Currency = mongoose.model('Currency')
-  , Address = mongoose.model('Address');
+  , Address = mongoose.model('Address')
+  , mailer = require('../config/mailer');
 
 function fetch_currency(req, res, callback) {
   Currency.findOne(
@@ -56,15 +57,12 @@ exports.show = function(req, res) {
 
 exports.create = function(req, res) {
   fetch_currency(req, res, function(currency) {
-    var address = new Address({email: req.body.email, address: req.body.address});
-
-    address.currency = currency;
+    var address = new Address({email: req.body.email, address: req.body.address, currency: currency});
     address.save(function (err) {
-      if (err) {
-        res.json(400, err);
-      }
+      if (err) res.json(400, err);
       else {
-        res.json(200, {message: "Created ! Address now waiting for validation."});
+        mailer.send_validation(address, currency);
+        res.json(200, {message: "Created ! Address now waiting for validation."})
       }
     });
   });
@@ -82,7 +80,10 @@ exports.update = function(req, res) {
       else {
         address.change_address(req.body.new_address, function(err) {
           if (err) res.json(400, err);
-          else res.json({message: "You should receive an email shortly containing a token and a link to validate the change"});
+          else {
+            mailer.address_update(address, currency);
+            res.json({message: "You should receive an email shortly containing a token and a link to validate the change"});
+          }
         });
       }
     });

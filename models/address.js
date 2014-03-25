@@ -1,8 +1,7 @@
 var mongoose = require('mongoose')
   , Schema = mongoose.Schema
   , crypto = require('crypto')
-  , validator = require('validator')
-  , mailer = require('../config/mailer');
+  , validator = require('validator');
 
 
 function validateAddress(str) {
@@ -54,16 +53,8 @@ AddressSchema.pre('save', function(next, done) {
   // Validate that this email is not already registered on this currency
   mongoose.model('Address').search_by_email_and_currency(self.email, self.currency, function(err, match) {
     if (err) done(err);
-    else if (match)
-      done(new Error("email must be unique for a given currency"));
-    else {
-      // Send validation mail
-      text_message = "Your validation token is " + self.validation_token + " !"
-
-      mailer.send_validation(self.email, "Validate your address", text_message);
-
-      next();
-    }
+    else if (match) done(new Error("email must be unique for a given currency"));
+    else next();
   });
 })
 
@@ -95,6 +86,8 @@ AddressSchema.methods = {
 
     if (!self.validated)
       callback(new Error('The email is still pending validation, the address cannot be updated'))
+    else if (self.pending_address)
+      callback(new Error('An address change is already pending'))
     else if (new_address === self.address)
       callback(new Error('The new address must be different from the existing one'))
     else if (!validateAddress(new_address))
@@ -104,14 +97,16 @@ AddressSchema.methods = {
       this.pending_address = new_address;
 
       this.save(function(err) {
-        if (!err) {
-          // Send new token by mail
-          text_message = "Your validation token is " + self.validation_token + " !"
-          mailer.send_validation(self.email, "Validate your address", text_message);
-        }
         callback(err);
       });
     }
+  },
+  get_validation_url: function(currency) {
+    return "http://gravaco.in/api/" + currency.symbol + '/addresses/' + this.encrypted_email + '/validate/' + this.validation_token
+  },
+  get_new_address_validation_url: function(currency) {
+    return "http://gravaco.in/api/" + currency.symbol + '/addresses/' + this.encrypted_email + '/validate_change/' + this.validation_token
+
   }
 }
 
