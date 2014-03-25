@@ -15,16 +15,6 @@ function fetch_currency(req, res, callback) {
   });
 }
 
-exports.list = function(req, res) {
-  fetch_currency(req, res, function(currency) {
-    Address.find({currency: currency}, function(err, addresses) {
-      if (err) throw err;
-
-      res.json(addresses);
-    });
-  });
-};
-
 exports.show_all = function(req, res) {
   Address.search_by_encrypted_validated(req.params.encrypted_email, function(err, addresses) {
     if (err) res.json(400, err);

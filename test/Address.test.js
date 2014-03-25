@@ -137,7 +137,7 @@ describe('Address', function() {
   describe('api routes', function() {
     it('needs currency to exist', function(done) {
       request(app)
-        .get('/api/undefined_currency/addresses')
+        .get('/api/undefined_currency/addresses/' + litecoin_address.encrypted_email)
         .expect(400, done)
     });
 
@@ -182,21 +182,6 @@ describe('Address', function() {
           .expect(200)
           .end(done)
       });
-    });
-
-    // LIST
-    it('GET /addresses', function(done) {
-      request(app)
-        .get('/api/' + litecoin.symbol + '/addresses')
-        .expect(200)
-        .end(function(err, res) {
-          if (err) throw err;
-
-          Address.count({currency: litecoin}, function(err, cnt) {
-            res.body.length.should.eql(cnt);
-            done()
-          })
-        });
     });
 
     // SHOW

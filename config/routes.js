@@ -15,7 +15,6 @@ function setup(app) {
     app.get('/:encrypted_email/pending', address.show_pending);
 
     app.namespace('/:currency', function() {
-      app.get('/addresses', address.list);
       app.post('/addresses', address.create);
       app.get('/addresses/:encrypted_email', address.show);
       app.put('/addresses/:encrypted_email', address.update);
