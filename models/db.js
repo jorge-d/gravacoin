@@ -17,7 +17,8 @@ mongoose.connection.on('error', function (err) {
 
 // Reconnect when closed
 mongoose.connection.on('disconnected', function () {
-  connect()
+  console.log('Mongoose connection disconnected, closing application');
+  process.exit(0);
 })
 
 mongoose.connection.on('connected', function () {

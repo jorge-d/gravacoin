@@ -9,7 +9,7 @@ module.exports = {
     },
     root: rootPath,
     app: {
-      name: 'Nodejs Gravacoin'
+      name: 'Gravacoin'
     },
     send_emails: true,
     port: 3000
@@ -21,10 +21,21 @@ module.exports = {
     },
     root: rootPath,
     app: {
-      name: 'Nodejs Gravatest'
+      name: 'Gravatest'
     },
     send_emails: false,
     port: 4004
   },
-  production: {}
+  production: {
+    db: {
+      url: 'mongodb://localhost/noobjs_production',
+      debug: false
+    },
+    root: rootPath,
+    app: {
+      name: 'Gravacoin'
+    },
+    send_emails: true,
+    port: 8080
+  }
 }

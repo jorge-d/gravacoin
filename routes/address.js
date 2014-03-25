@@ -113,7 +113,7 @@ exports.show_basic_badge = function(req, res) {
     req.params.hash
   , function (err, address) {
     var url = 'http://b.repl.ca/v1/Donate-coins-FFC83C.png'
-    if (err || address.length == 0)
+    if (err || address.length === 0)
       url = 'http://b.repl.ca/v1/Gravacoin-not%20found-red.png'
 
     request.get(url).pipe(res);
@@ -125,7 +125,7 @@ exports.show_currency_badge = function(req, res) {
       req.params.hash
     , currency
     , function (err, address) {
-      var url = 'http://b.repl.ca/v1/Donate-' + currency.name + '-FFC83C.png'
+      var url = 'http://b.repl.ca/v1/Donate ' + currency.name + '-' + address.address + '-FFC83C.png'
       if (err || !address)
         url = 'http://b.repl.ca/v1/Gravacoin-Address%20not%20found-red.png'
 
