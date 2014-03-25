@@ -8,6 +8,20 @@ var mongoose = require('mongoose')
 function validateAddress(str) {
   return validator.isAlphanumeric(str) && validator.isLength(str, 10, 50)
 }
+function generateRandomToken() {
+  try {
+    return crypto.randomBytes(16).toString('hex');
+  } catch(e) {
+    throw "Error in address model - Crypto generation failed"
+  }
+}
+function encryptEmail(email) {
+  try {
+    return crypto.createHash('md5').update(email).digest("hex");
+  } catch(e) {
+    throw "Error in address model - Crypto generation failed"
+  }
+}
 
 var AddressSchema = new Schema({
   'currency' : {
@@ -17,7 +31,8 @@ var AddressSchema = new Schema({
     index : true
   },
   'address': { type: String, trim: true, required: true, validate: [validateAddress, 'Bad syntax']},
-  'email': { type: String, trim: true, lowercase: true, validate: [validator.isEmail, 'an email is required']},
+  'pending_address': { type: String, trim: true, required: false},
+  'email': { type: String, trim: true, required: true, lowercase: true, validate: [validator.isEmail, 'an email is required']},
   'encrypted_email': { type: String, lowercase: true, validate: [validator.isAlphanumeric, 'encrypted_email is required']},
   'validated': {type: Boolean, default: false},
   'created_at': {type: Date, default: Date.now},
@@ -33,18 +48,13 @@ AddressSchema.pre('save', function(next, done) {
 
   self.email = self.email.toLowerCase();
 
-  try {
-    self.validation_token = crypto.randomBytes(16).toString('hex');
-    self.encrypted_email = crypto.createHash('md5').update(self.email).digest("hex");
-  } catch (e) {
-    throw "Error in address model - Crypto generation failed"
-  }
+  self.validation_token = generateRandomToken();
+  self.encrypted_email = encryptEmail(self.email);
 
   // Validate that this email is not already registered on this currency
   mongoose.model('Address').search_by_email_and_currency(self.email, self.currency, function(err, match) {
-    if (err) throw err;
-
-    if (match)
+    if (err) done(err);
+    else if (match)
       done(new Error("email must be unique for a given currency"));
     else {
       // Send validation mail
@@ -58,6 +68,18 @@ AddressSchema.pre('save', function(next, done) {
 })
 
 AddressSchema.methods = {
+  validate_address_change: function(token, callback) {
+    var self = this;
+
+    if (!self.pending_address)
+      callback(new Error('No address pending for change'))
+    else if (token != self.validation_token)
+      callback(new Error('Token does not match'))
+    else
+      self.address = self.pending_address;
+      self.pending_address = undefined;
+      self.save(callback);
+  },
   set_as_validated: function (callback) {
     this.validated = true;
     this.validated_at = Date.now();
@@ -67,6 +89,29 @@ AddressSchema.methods = {
 
       callback();
     });
+  },
+  change_address: function(new_address, callback) {
+    var self = this;
+
+    if (!self.validated)
+      callback(new Error('The email is still pending validation, the address cannot be updated'))
+    else if (new_address === self.address)
+      callback(new Error('The new address must be different from the existing one'))
+    else if (!validateAddress(new_address))
+      callback(new Error('Bad syntax for new address'))
+    else {
+      this.validation_token = generateRandomToken();
+      this.pending_address = new_address;
+
+      this.save(function(err) {
+        if (!err) {
+          // Send new token by mail
+          text_message = "Your validation token is " + self.validation_token + " !"
+          mailer.send_validation(self.email, "Validate your address", text_message);
+        }
+        callback(err);
+      });
+    }
   }
 }
 

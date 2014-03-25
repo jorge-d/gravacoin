@@ -37,7 +37,7 @@ describe('Address', function() {
 
   before(function (done) {
     Address.create(
-      {email: 'foobar@example.com', currency: bitcoin, address: '1W97yJxTfzYtYchzefxVPKqwoUb7Rx64M'}
+      {email: 'foobar@example.com', currency: bitcoin, address: '1W97yJxTfzYtYchzefxVPKqwoUb7Rx64M', validated: true}
     , {email: 'foobar@example.com', currency: litecoin, address: 'Lgs5HMfXMMHZA8wsmYtLb5XF8uTPHpq9Sa'}
     , function(err, btc_addr, ltc_addr) {
       if (err) throw err;
@@ -85,8 +85,52 @@ describe('Address', function() {
         });
       });
     });
+    describe('is possible to edit the address', function() {
+      it('requires the address to be validated first', function(done) {
+        Address.create(
+          {email: 'random@lol.fr', currency: bitcoin, address: bitcoin_address.address}
+          , function(err, address) {
+            var old_token = address.validation_token
+            var new_random_address = '59bcc3ad6775562f845953cf01624225'
+            address.validated.should.not.be.ok;
+            address.change_address(new_random_address, function(err) {
+              should.exist(err);
+              should.not.exist(address.pending_address);
+
+              address.set_as_validated(function(err) {
+                if (err) throw err;
+                address.change_address(new_random_address, function(err) {
+                  should.not.exist(err);
+                  address.pending_address.should.eql(new_random_address);
+                  address.validation_token.should.not.eql(old_token);
+
+                  address.validate_address_change(address.validation_token, function(err) {
+                    should.not.exist(err);
+                    address.address.should.eql(new_random_address);
+                    should.not.exist(address.pending_address);
+                    done();
+                  });
+                });
+              });
+            });
+        });
+      });
+      it('with invalid parameters (bad address or same than old)', function(done) {
+        var invalid_new_addresses = ['       a', null, bitcoin_address.address];
+        var count = invalid_new_addresses.length;
+        invalid_new_addresses.forEach(function(new_address) {
+          bitcoin_address.change_address(new_address, function(err) {
+            console.log(err);
+            should.exist(err);
+            should.not.exist(bitcoin_address.pending_address);
+            if (--count === 0) done();
+          });
+        });
+      });
+    });
   });
 
+  // TODO : Write some tests for controllers (profile page & embed)
   describe('webpages routes', function() {
 
   });
