@@ -110,23 +110,23 @@ AddressSchema.methods = {
   }
 }
 
-AddressSchema.statics.search_by_email_and_currency = function(email, currency_id, cb) {
-  return this.findOne({'email': email.toLowerCase(), currency: currency_id}).populate('currency').exec(cb);
+AddressSchema.statics.search_by_email_and_currency = function(email, currency_id, cb, select_pattern) {
+  return this.findOne({'email': email.toLowerCase(), currency: currency_id}).select(select_pattern).populate('currency', 'name symbol url -_id').exec(cb);
 }
-AddressSchema.statics.search_by_encrypted_and_currency = function(encrypted_email, currency_id, cb) {
-  return this.findOne({'encrypted_email': encrypted_email.toLowerCase(), currency: currency_id}).populate('currency').exec(cb);
+AddressSchema.statics.search_by_encrypted_and_currency = function(encrypted_email, currency_id, cb, select_pattern) {
+  return this.findOne({'encrypted_email': encrypted_email.toLowerCase(), currency: currency_id}).select(select_pattern).populate('currency', 'name symbol url -_id').exec(cb);
 }
-AddressSchema.statics.search_validated_by_encrypted = function(encrypted_email, cb) {
-  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: true}).populate('currency').exec(cb);
+AddressSchema.statics.search_validated_by_encrypted = function(encrypted_email, cb, select_pattern) {
+  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: true}).select(select_pattern).populate('currency', 'name symbol url -_id').exec(cb);
 }
-AddressSchema.statics.search_by_encrypted = function(encrypted_email, cb) {
-  return this.find({encrypted_email: encrypted_email.toLowerCase()}).populate('currency').exec(cb);
+AddressSchema.statics.search_by_encrypted = function(encrypted_email, cb, select_pattern) {
+  return this.find({encrypted_email: encrypted_email.toLowerCase()}).select(select_pattern).populate('currency', 'name symbol url -_id').exec(cb);
 }
-AddressSchema.statics.search_by_encrypted_validated = function(encrypted_email, cb) {
-  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: true}).populate('currency').exec(cb);
+AddressSchema.statics.search_by_encrypted_validated = function(encrypted_email, cb, select_pattern) {
+  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: true}).select(select_pattern).populate('currency', 'name symbol url -_id').exec(cb);
 }
-AddressSchema.statics.search_by_encrypted_not_validated = function(encrypted_email, cb) {
-  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: false}).populate('currency').exec(cb);
+AddressSchema.statics.search_by_encrypted_not_validated = function(encrypted_email, cb, select_pattern) {
+  return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: false}).select(select_pattern).populate('currency', 'name symbol url -_id').exec(cb);
 }
 
 mongoose.model('Address', AddressSchema);

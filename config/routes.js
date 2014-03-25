@@ -11,8 +11,8 @@ function setup(app) {
 
   app.namespace('/api', function() {
     app.get('/currencies', currency.list);
-    app.get('/addresses/:encrypted_email', address.show_all);
-    app.get('/addresses/:encrypted_email/pending', address.show_pending);
+    app.get('/:encrypted_email', address.show_all);
+    app.get('/:encrypted_email/pending', address.show_pending);
 
     app.namespace('/:currency', function() {
       app.get('/addresses', address.list);

@@ -58,7 +58,7 @@ describe('Address', function() {
       });
     });
     it('generates a unique code', function(done) {
-      Address.search_by_email_and_currency(litecoin_address.email, litecoin, function(err, address) {
+      Address.findOne({email: litecoin_address.email, currency: litecoin}, function(err, address) {
         should.exist(address.validation_token);
         done();
       });
@@ -222,7 +222,7 @@ describe('Address', function() {
     });
 
     // SHOW ALL | Profile calls
-    describe('profile GET /addresses/:encrypted_email', function() {
+    describe('profile GET /:encrypted_email', function() {
       var person = {email: 'person_with_3_addresses_and_only_two_validated@yopmail.fr'};
 
       before(function(done) {
@@ -244,7 +244,7 @@ describe('Address', function() {
       });
       it('it lists email for all currencies validated', function(done) {
         request(app)
-          .get('/api/addresses/' + person.btc.encrypted_email)
+          .get('/api/' + person.btc.encrypted_email)
           .expect(200)
           .end(function(err, res) {
             if (err) throw err;
@@ -255,12 +255,12 @@ describe('Address', function() {
       });
       it('it returns no content if validated addresses does not exist', function(done) {
         request(app)
-          .get('/api/addresses/someRandomUnexistingHash')
+          .get('/api/someRandomUnexistingHash')
           .expect(204, done)
       });
       it('can list pending addresses', function(done) {
         request(app)
-          .get('/api/addresses/' + person.btc.encrypted_email + '/pending')
+          .get('/api/' + person.btc.encrypted_email + '/pending')
           .expect(200)
           .end(function(err, res) {
             if (err) throw err;
@@ -317,7 +317,7 @@ describe('Address', function() {
         .end(function(err, res) {
           should.not.exist(err);
 
-          Address.search_by_email_and_currency(bitcoin_address.email, bitcoin, function(err, address) {
+          Address.findOne({email: bitcoin_address.email, currency: bitcoin}, function(err, address) {
             address.pending_address.should.eql(new_address);
 
             request(app)
@@ -326,7 +326,7 @@ describe('Address', function() {
               .end(function(err, res) {
                 should.not.exist(err);
 
-                Address.search_by_email_and_currency(bitcoin_address.email, bitcoin, function(err, address) {
+                Address.findOne({email: bitcoin_address.email, currency: bitcoin}, function(err, address) {
                   should.not.exist(address.pending_address);
                   address.address.should.eql(new_address);
                   done();

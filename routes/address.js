@@ -30,14 +30,16 @@ exports.show_all = function(req, res) {
     if (err) res.json(400, err);
     else if (addresses.length === 0) res.send('', 204);
     else res.json(addresses);
-  });
+    }
+  , 'encrypted_email address validated currency -_id');
 }
 exports.show_pending = function(req, res) {
   Address.search_by_encrypted_not_validated(req.params.encrypted_email, function(err, addresses) {
     if (err) res.json(400, err);
     else if (addresses.length === 0) res.send('', 204);
     else res.json(addresses);
-  });
+    }
+  , 'encrypted_email address validated currency -_id');
 }
 
 exports.show = function(req, res) {
@@ -62,7 +64,7 @@ exports.create = function(req, res) {
       if (err) res.json(400, err);
       else {
         mailer.send_validation(address, currency);
-        res.json(200, {message: "Created ! Address now waiting for validation."})
+        res.json(200, {message: "Created ! Waiting for validation."})
       }
     });
   });
