@@ -120,7 +120,6 @@ describe('Address', function() {
         var count = invalid_new_addresses.length;
         invalid_new_addresses.forEach(function(new_address) {
           bitcoin_address.change_address(new_address, function(err) {
-            console.log(err);
             should.exist(err);
             should.not.exist(bitcoin_address.pending_address);
             if (--count === 0) done();
@@ -305,6 +304,36 @@ describe('Address', function() {
               .expect(404, done)
           });
       });
+    });
+
+    // UPDATE a validated address
+    it('PUT /api/:symbol/addresses/:encrypted_email/', function(done) {
+      var new_address = '144107a75ad2cf5eeb32dfa62faa8b76';
+
+      request(app)
+        .put('/api/' + bitcoin.symbol + '/addresses/' + bitcoin_address.encrypted_email)
+        .send({new_address: new_address})
+        .expect(200)
+        .end(function(err, res) {
+          should.not.exist(err);
+
+          Address.search_by_email_and_currency(bitcoin_address.email, bitcoin, function(err, address) {
+            address.pending_address.should.eql(new_address);
+
+            request(app)
+              .get('/api/' + bitcoin.symbol + '/addresses/' + bitcoin_address.encrypted_email + '/validate_change/' + address.validation_token)
+              .expect(200)
+              .end(function(err, res) {
+                should.not.exist(err);
+
+                Address.search_by_email_and_currency(bitcoin_address.email, bitcoin, function(err, address) {
+                  should.not.exist(address.pending_address);
+                  address.address.should.eql(new_address);
+                  done();
+              });
+            });
+          });
+        });
     });
   });
 });

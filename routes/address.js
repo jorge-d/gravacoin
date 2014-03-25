@@ -70,8 +70,45 @@ exports.create = function(req, res) {
   });
 }
 
+exports.update = function(req, res) {
+  fetch_currency(req, res, function(currency) {
+    Address.search_by_encrypted_and_currency(
+      req.params.encrypted_email
+    , currency
+    , function (err, address) {
+      if (err) throw err;
+      else if (!address)
+        res.json(404, {error: "Not found"})
+      else {
+        address.change_address(req.body.new_address, function(err) {
+          if (err) res.json(400, err);
+          else res.json({message: "You should receive an email shortly containing a token and a link to validate the change"});
+        });
+      }
+    });
+  });
+}
+
+exports.validate_address_change = function(req, res) {
+  var token = req.params.token;
+  fetch_currency(req, res, function(currency) {
+    Address.search_by_encrypted_and_currency(
+      req.params.encrypted_email
+    , currency
+    , function (err, address) {
+      if (err) res.json(400, err);
+      else if (!address) res.json(404, {error: "Not found"})
+      else {
+        address.validate_address_change(token, function(err) {
+          if (err) res.json(400, err);
+          else res.json(200);
+        });
+      }
+    });
+  });
+}
 exports.validate = function(req, res) {
-  token = req.params.token;
+  var token = req.params.token;
   fetch_currency(req, res, function(currency) {
     Address.search_by_encrypted_and_currency(
       req.params.encrypted_email
