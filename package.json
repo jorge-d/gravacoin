@@ -16,7 +16,8 @@
     "express-namespace": "^0.1.1",
     "gulp-coffee": "^1.4.1",
     "gulp-util": "^2.2.14",
-    "request": "^2.34.0"
+    "request": "^2.34.0",
+    "less-middleware": "^0.2.1-beta"
   },
   "devDependencies": {
     "mocha": "^1.17.1",

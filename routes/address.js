@@ -146,9 +146,12 @@ exports.show_basic_badge = function(req, res) {
   Address.search_by_encrypted_validated(
     req.params.hash
   , function (err, address) {
-    var url = 'http://b.repl.ca/v1/Donate-coins-53AEFF.png'
+    var url;
+
     if (err || address.length === 0)
-      url = 'http://b.repl.ca/v1/Gravacoin-not%20found-red.png'
+      url = 'http://b.repl.ca/v1/Gravacoin-not%20found-red.png';
+    else
+      url = 'http://b.repl.ca/v1/Donate-coins-53AEFF.png';
 
     request.get(url).pipe(res);
   });
@@ -159,9 +162,12 @@ exports.show_currency_badge = function(req, res) {
       req.params.hash
     , currency
     , function (err, address) {
-      var url = 'http://b.repl.ca/v1/' + currency.name + '-' + address.address + '-53AEFF.png'
+      var url;
+
       if (err || !address)
-        url = 'http://b.repl.ca/v1/Gravacoin-Address%20not%20found-red.png'
+        url = 'http://b.repl.ca/v1/Gravacoin-Address%20not%20found-red.png';
+      else
+        url = 'http://b.repl.ca/v1/' + currency.name + '-' + address.address + '-53AEFF.png';
 
       request.get(url).pipe(res);
     });
