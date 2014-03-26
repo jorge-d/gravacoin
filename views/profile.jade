@@ -5,23 +5,25 @@ block header
 
   .container.push--top.profil-page(ng-app="app")
     .row(ng-controller="CurrencyCtrl")
-      .col-lg-2
-        img.img-circle(src='http://www.gravatar.com/avatar/' + hash, width='140', alt='', ng-init="hash='#{hash}';")
-      .col-lg-10
-        table.table.table-hover
-          tr
-            th Currency
-            th Address
-            th &nbsp;
-          tr(ng-repeat="it in addresses")
-            td
-              a(href="{{it.currency.url}}", target="_blank", title="Go to {{it.currency.name}} website")
-                img(ng-src="/images/{{it.currency.symbol || 'empty'}}.png")
-              &nbsp;
-              {{it.currency.name}}
-            td {{it.address}}
-            td
-              button.btn.btn-info(class="copy-button pull-right", data-currency="{{it.currency.symbol}}", clip-copy="it.address", clip-click="handleClick(it.currency.symbol)", title="Click to clipboard")
-                span.legend Copy to Clipboard
-                span.glyphicon.glyphicon-check.hidden
+      .row
+        .col-md-6.col-md-offset-3.text-center
+          img.img-circle(src='http://www.gravatar.com/avatar/' + hash, width='140', alt='', ng-init="hash='#{hash}';")
+      .row.mt
+        .col-md-8.col-md-offset-2
+          table.table.table-hover
+            tr
+              th Currency
+              th Address
+              th &nbsp;
+            tr(ng-repeat="it in addresses")
+              td
+                a(href="{{it.currency.url}}", target="_blank", title="Go to {{it.currency.name}} website")
+                  img(ng-src="/images/{{it.currency.symbol || 'empty'}}.png")
+                &nbsp;
+                {{it.currency.name}}
+              td {{it.address | limitTo:30}}
+              td
+                button.btn.btn-info.btn-xs(class="copy-button pull-right", data-currency="{{it.currency.symbol}}", clip-copy="it.address", clip-click="handleClick(it.currency.symbol)", title="Click to clipboard")
+                  span.legend Copy to Clipboard
+                  span.glyphicon.glyphicon-check.hidden
 

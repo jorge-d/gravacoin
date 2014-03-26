@@ -5,7 +5,7 @@ app.config(['ngClipProvider', (ngClipProvider)->
 ]);
 app.factory('Address', ['$resource',
   ($resource)->
-    $resource('/api/addresses/:hash', {hash: '@hash'}, {
+    $resource('/api/:hash', {hash: '@hash'}, {
       query: {method:'GET', isArray:true}
     });
   ]
@@ -19,12 +19,10 @@ app.factory('Currency', ['$resource',
 );
 
 app.controller('CurrencyCtrl', ['$scope', '$location', 'Address', 'Currency', ($scope, $location, Address, Currency)->
-  $scope.currencies = {}
-
   $scope.handleClick = (currency)->
     current = $("button[data-currency=#{currency}]")
     current.removeClass('btn-info').addClass('btn-success')
-    current.find('.legend').text("Copied !")
+    current.find('.legend').text("")
     current.find('.glyphicon').removeClass('hidden')
 
     window.setInterval ()->
@@ -35,6 +33,7 @@ app.controller('CurrencyCtrl', ['$scope', '$location', 'Address', 'Currency', ($
 
     return
 
+  # We use ng-init to pass the hash variable along, so the variable only exists later
   $scope.$watch 'hash', ->
     $scope.addresses = Address.query {hash: $scope.hash}
 ]);

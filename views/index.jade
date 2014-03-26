@@ -1,79 +1,75 @@
 extends layout
 
 block header
+  script(src='/javascripts/main.js')
   #headerwrap
-    .container
-      .row
-        .col-lg-8
+    .container.text-center(ng-app="indexApp")
+      .row(ng-controller="IndexCtrl")
+        .col-lg-12
           h1
-            | Like gravatar
-            br
-            | For coins.
-          a.button.btn.btn-info.btn-lg(href='#how_it_works') How does it work?
-        .col-lg-4
-          img.img-responsive(src='/images/ipad-hand.png', alt='')
-
+            | Gravacoin is a free open-source <em>tool</em> to share your <br/>
+            | <strong>{{currency}}</strong> addresse with the world.
+      .row.mt
+        a.button.btn.btn-success.btn-lg(href='#documentation') How does it work?
 
 block content
   #how_it_works.container
     .row.mt.centered
-      .col-lg-6.col-lg-offset-3
-        h1
-          | List all your addresses
-          br
-          | No registration required.
-        h3
-          | Because raw text addresses' are so 2013.
+      h1 List all your addresses<br />No registration required.
+      h3 Because copy/paste is so 2013, we use ZeroClipboard.
 
     .row.mt.centered
       .col-lg-4
-        img(src='/images/ser01.png', width='180', alt='')
+        img(src='/images/ser01.png', width='180', alt='Register your address')
         h4 1 - Register your address
-        p
-          | Use our API to send your address
+        p Use our API to send your address
       .col-lg-4
-        img(src='/images/ser02.png', width='180', alt='')
+        img(src='/images/ser02.png', width='180', alt='Receive code')
         h4 2 - Receive a confirmation code
-        p
-          | Use this code to confirm your address
+        p Use this code to confirm your address
       .col-lg-4
-        img(src='/images/ser03.png', width='180', alt='')
+        img(src='/images/ser03.png', width='180', alt='Validate using code')
         h4 3 - That's it
-        p
-          | Your newly registered address appears on your profile page
+        p Your newly registered address appears on your profile page
 
     .row.mt.centered.text-center
       h3 You can then embed a badge pointing to your profile anywere !
-      .col-lg-1.col-lg-offset-4
-        a(href="/458641ed4b2725b16edbf0192ca0b2f2", title="See profile page", target="_blank")
-          img(src="/458641ed4b2725b16edbf0192ca0b2f2.png")
-      .col-lg-2
-        a(href="/458641ed4b2725b16edbf0192ca0b2f2", title="See profile page", target="_blank")
-          img(src="/ltc/458641ed4b2725b16edbf0192ca0b2f2.png")
-      .col-lg-1
-        a(href="/458641ed4b2725b16edbf0192ca0b2f2", title="See profile page", target="_blank")
-          img(src="/btc/458641ed4b2725b16edbf0192ca0b2f2.png")
+      p With more options to come!
+      .mt
+        .col-lg-4.col-lg-offset-1.col-md-4.col-xs-12
+          a.text-right(href="/458641ed4b2725b16edbf0192ca0b2f2", target="_blank")
+            img(src="/ltc/458641ed4b2725b16edbf0192ca0b2f2.png", alt="See profile page")
+        .col-lg-2.col-md-4.col-xs-12
+          a.text-center(href="/458641ed4b2725b16edbf0192ca0b2f2", target="_blank")
+            img(src="/458641ed4b2725b16edbf0192ca0b2f2.png", alt="See profile page")
+        .col-lg-4.col-md-4.col-xs-12
+          a.text-left(href="/458641ed4b2725b16edbf0192ca0b2f2", target="_blank")
+            img(src="/btc/458641ed4b2725b16edbf0192ca0b2f2.png", alt="See profile page")
 
   .container
     hr
 
   #documentation.container
     .row.mt
+      .text-center
+        h1 Documentation
+        p The full documentation is available in the Github <a href="http://github.com/jorge-d/gravacoin/wiki/", title="wiki">wiki</a>.
       .col-lg-12
         h3 Register an address
 
         .well.well-lg
           code.col-md-6
-            | $> curl -X POST http://gravaco.in/api/:symbol/addresses \
+            | $> curl -X POST \
+            br
+            | http://gravaco.in/api/:currency/addresses \
             br
             | -d "email=your_email" \
             br
             | -d 'address=your_address'
           p.col-md-6
-            | Where symbol is the currency for which you register the address
+            | Where currency is the symbol of the currency for which you register the address
             br
-            | A full list of available currencies is available &nbsp;
-            a(href="/api/currencies") here
+            | A full list of available currencies is available <a href="/api/currencies" title="See wiki">here</a>
           .clearfix &nbsp;
       .col-lg-12
         h3 Validate this address
@@ -94,19 +90,24 @@ block content
             where HASH is your encrypted email (md5)
           .clearfix &nbsp;
 
+      h3.text-center Feel free to <a href="http://github.com/jorge-d/gravacoin" title="Go to repository" target="blank">contribute</a>.
   .container
     hr
 
   #about.container
     .row.mt.centered
       .col-lg-6.col-lg-offset-3
-        h1 About
-      .row.mt.centered
+        h1 About the author
+      .row.mt
         .col-lg-4.col-lg-offset-4
           img.img-circle(src='http://www.gravatar.com/avatar/458641ed4b2725b16edbf0192ca0b2f2', width='140', alt='')
           h4 Dimitri Jorge
-          p
-            | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever.
+          p.text-left.
+            Hi, I'm a developper currently living in Paris.
+            <br />I have built this tool because I was sick of seein raw addresses in Readme's or donation pages.
+            <br />What if you want to use another address? Or if I want to donate DOGEs to someone whom I only know the email.
+            <br />That's where I think <em>Gravacoin</em> can be an answer.
+            <br />That's my first NodeJS app so I would love to get feedbacks / contributions to the projects, feel free to contact me.
           p
             i.glyphicon.glyphicon-send
             i.glyphicon.glyphicon-phone

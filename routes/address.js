@@ -141,7 +141,7 @@ exports.show_basic_badge = function(req, res) {
   Address.search_by_encrypted_validated(
     req.params.hash
   , function (err, address) {
-    var url = 'http://b.repl.ca/v1/Donate-coins-FFC83C.png'
+    var url = 'http://b.repl.ca/v1/Donate-coins-53AEFF.png'
     if (err || address.length === 0)
       url = 'http://b.repl.ca/v1/Gravacoin-not%20found-red.png'
 
@@ -154,7 +154,7 @@ exports.show_currency_badge = function(req, res) {
       req.params.hash
     , currency
     , function (err, address) {
-      var url = 'http://b.repl.ca/v1/Donate ' + currency.name + '-' + address.address + '-FFC83C.png'
+      var url = 'http://b.repl.ca/v1/' + currency.name + '-' + address.address + '-53AEFF.png'
       if (err || !address)
         url = 'http://b.repl.ca/v1/Gravacoin-Address%20not%20found-red.png'
 
