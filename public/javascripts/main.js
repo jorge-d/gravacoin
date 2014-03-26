@@ -18,7 +18,7 @@ app.factory('Currency', [
 app.controller('IndexCtrl', [
   '$scope', '$timeout', 'Currency', function($scope, $timeout, Currency) {
     var currencySlide, idx;
-    idx = 10;
+    idx = 0;
     currencySlide = function() {
       $scope.currency = $scope.currencies[idx].name;
       idx += 1;

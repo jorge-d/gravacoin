@@ -63,13 +63,14 @@ AddressSchema.methods = {
     var self = this;
 
     if (!self.pending_address)
-      callback(new Error('No address pending for change'))
+      callback('No address pending for change')
     else if (token != self.validation_token)
-      callback(new Error('Token does not match'))
-    else
+      callback('Token does not match')
+    else {
       self.address = self.pending_address;
       self.pending_address = undefined;
       self.save(callback);
+    }
   },
   set_as_validated: function (callback) {
     this.validated = true;
@@ -85,13 +86,13 @@ AddressSchema.methods = {
     var self = this;
 
     if (!self.validated)
-      callback(new Error('The email is still pending validation, the address cannot be updated'))
+      callback('The email is still pending validation, the address cannot be updated')
     else if (self.pending_address)
-      callback(new Error('An address change is already pending'))
+      callback('An address change is already pending')
     else if (new_address === self.address)
-      callback(new Error('The new address must be different from the existing one'))
+      callback('The new address must be different from the existing one')
     else if (!validateAddress(new_address))
-      callback(new Error('Bad syntax for new address'))
+      callback('Bad syntax for new address')
     else {
       this.validation_token = generateRandomToken();
       this.pending_address = new_address;
@@ -115,6 +116,9 @@ AddressSchema.statics.search_by_email_and_currency = function(email, currency_id
 }
 AddressSchema.statics.search_by_encrypted_and_currency = function(encrypted_email, currency_id, cb, select_pattern) {
   return this.findOne({'encrypted_email': encrypted_email.toLowerCase(), currency: currency_id}).select(select_pattern).populate('currency', 'name symbol url -_id').exec(cb);
+}
+AddressSchema.statics.search_by_encrypted_and_currency_validated = function(encrypted_email, currency_id, cb, select_pattern) {
+  return this.findOne({'encrypted_email': encrypted_email.toLowerCase(), currency: currency_id, validated: true}).select(select_pattern).populate('currency', 'name symbol url -_id').exec(cb);
 }
 AddressSchema.statics.search_validated_by_encrypted = function(encrypted_email, cb, select_pattern) {
   return this.find({encrypted_email: encrypted_email.toLowerCase(), validated: true}).select(select_pattern).populate('currency', 'name symbol url -_id').exec(cb);

@@ -2,10 +2,7 @@ app = angular.module('indexApp', ['ngResource'])
 
 app.factory('Currency', ['$resource',
   ($resource)->
-    $resource
-        '/api/currencies/:id'
-      , id: '@id'
-      , query: {method:'GET', isArray:true}
+    $resource '/api/currencies/:id' , {id: '@id'}, query: {method:'GET', isArray:true}
   ]
 )
 

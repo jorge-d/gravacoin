@@ -70,7 +70,11 @@ exports.update = function(req, res) {
         res.json(404, {error: "Not found"})
       else {
         address.change_address(req.body.new_address, function(err) {
-          if (err) res.json(400, {error: "An error occured, maybe the new address is the same than the existing one?"});
+          if (err) {
+            console.log('penis')
+            console.log(err)
+            res.json(400, {error: "An error occured, maybe the new address is the same than the existing one?"});
+          }
           else {
             mailer.address_update(address, currency);
             res.json({message: "You should receive an email shortly containing a token and a link to validate the change"});
@@ -89,7 +93,7 @@ exports.validate_address_change = function(req, res) {
     , currency
     , function (err, address) {
       if (err) res.json(400, err);
-      else if (!address) res.json(404, {error: "Not found"})
+      else if (!address) res.json(404, "Not found")
       else {
         address.validate_address_change(token, function(err) {
           if (err) res.json(400, err);
@@ -126,13 +130,14 @@ exports.validate = function(req, res) {
 exports.show_profile = function(req, res) {
   var hash = req.params.hash;
 
-  Address.search_by_encrypted(
+  Address.search_by_encrypted_validated(
     hash
   , function(err, addresses) {
     if (err) res.send(404);
     else
       res.render('profile', {
-        hash: hash
+        hash: hash,
+        addresses_nb: addresses.length
       })
   });
 }
@@ -150,7 +155,7 @@ exports.show_basic_badge = function(req, res) {
 }
 exports.show_currency_badge = function(req, res) {
   fetch_currency(req, res, function(currency) {
-    Address.search_by_encrypted_and_currency(
+    Address.search_by_encrypted_and_currency_validated(
       req.params.hash
     , currency
     , function (err, address) {
