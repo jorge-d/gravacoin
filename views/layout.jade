@@ -4,8 +4,20 @@ html
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    meta(name='description', content='')
+    meta(name='description', content='Gravacoin is a tool to share your crypto-addresses with the world!')
+    meta(name='keyword', content='Bitcoin Dogecoin Litecoin open-source Feathercoin Github addresse-book cryptocurrency')
+    meta(name='application-name', content='Gravacoin')
     meta(name='author', content='Dimitri Jorge')
+    meta(property="og:title", content="Gravacoin")
+    meta(property="og:type", content="article")
+    meta(property="og:image", content="http://gravaco.in/images/dogecoin-main.png")
+    meta(property="og:url", content="http://gravaco.in")
+    meta(property="og:description", content="Gravacoin is a tool to share your crypto-addresses with the world!")
+
+    meta(name="twitter:card", content="summary")
+    meta(name="twitter:title", content="Gravacoin")
+    meta(name="twitter:description", content="Gravacoin is a tool to share your crypto-addresses with the world!")
+    meta(name="twitter:image", content="http://gravaco.in/images/dogecoin-main.png")
 
     title Gravacoin
 
@@ -19,6 +31,15 @@ html
       script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
 
   body
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-49426829-1', 'gravaco.in');
+      ga('send', 'pageview');
+
     script(src='/zeroclipboard/ZeroClipboard.min.js')
     script(src='/angular/angular.min.js')
     script(src='/angular/angular-resource.min.js')
@@ -47,5 +68,3 @@ html
     block header
 
     block content
-
-
