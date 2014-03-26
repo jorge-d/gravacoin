@@ -1,6 +1,6 @@
 # Gravacoin
 
-[Gravacoin](http://gravaco.in) is a free open-source service to share your crypto-addresse with the world
+[Gravacoin](http://gravaco.in) is a free open-source service to share your crypto-addresses with the world
 
 ## Documentation
 
