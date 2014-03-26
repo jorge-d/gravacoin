@@ -2,6 +2,10 @@
 
 [Gravacoin](http://gravaco.in) is a free open-source service to share your crypto-addresse with the world
 
+## Documentation
+
+Please check the [wiki pages](http://github.com/jorge-d/gravacoin/wiki/_pages).
+
 ## Install
 
 Checkout the repo and run `npm install`.
