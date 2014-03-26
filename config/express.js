@@ -4,8 +4,6 @@ var path = require('path')
 module.exports = function(app, config) {
   app.set('showStackError', true)
 
-  app.set('port', process.env.PORT || 3000);
-
   app.set('views', path.join(config.root + '/views'));
   app.set('view engine', 'jade');
   // app.use(express.favicon());

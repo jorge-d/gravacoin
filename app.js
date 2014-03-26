@@ -15,8 +15,10 @@ require('./models/db')
 require('./config/express')(app, config);
 require('./config/routes').setup(app);
 
-app.listen(config.port);
-console.log('Express server listening on port ' + config.port);
+app.set('port', process.env.PORT || config.port);
+
+app.listen(app.get('port'));
+console.log('Express server listening on port ' + app.get('port'));
 
 // expose app
 exports = module.exports = app;
