@@ -1,7 +1,7 @@
 app = angular.module('app', ['ngResource', 'ngClipboard']);
 
 app.config(['ngClipProvider', (ngClipProvider)->
-  ngClipProvider.setPath("ZeroClipboard.swf");
+  ngClipProvider.setPath("zeroclipboard/ZeroClipboard.swf");
 ]);
 app.factory('Address', ['$resource',
   ($resource)->

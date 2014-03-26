@@ -23,7 +23,7 @@ block header
                     img(ng-src="/images/{{it.currency.symbol || 'empty'}}.png")
                   &nbsp;
                   {{it.currency.name}}
-                td {{it.address | limitTo:30}}
+                td {{it.address}}
                 td
                   button.btn.btn-info.btn-xs(class="copy-button pull-right", data-currency="{{it.currency.symbol}}", clip-copy="it.address", clip-click="handleClick(it.currency.symbol)", title="Click to clipboard")
                     span.legend Copy to Clipboard

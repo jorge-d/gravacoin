@@ -4,7 +4,7 @@ app = angular.module('app', ['ngResource', 'ngClipboard']);
 
 app.config([
   'ngClipProvider', function(ngClipProvider) {
-    return ngClipProvider.setPath("ZeroClipboard.swf");
+    return ngClipProvider.setPath("zeroclipboard/ZeroClipboard.swf");
   }
 ]);
 

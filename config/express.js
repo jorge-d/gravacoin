@@ -19,12 +19,7 @@ module.exports = function(app, config) {
 
   app.use(require('less-middleware')(path.join(config.root, 'public')));
   app.use(express.static(config.root + '/public/'));
-  app.use(express.static(config.root + '/components/bootstrap/dist'));
-  app.use(express.static(config.root + '/components/jquery/dist'));
-  app.use(express.static(config.root + '/components/zeroclipboard'));
-  app.use(express.static(config.root + '/components/angular'));
-  app.use(express.static(config.root + '/components/angular-resource'));
-  app.use(express.static(config.root + '/components/ng-clip/dest'));
+  app.use(express.static(config.root + '/lib/'));
 
   if (env == 'developement') {
     app.use(express.errorHandler());
