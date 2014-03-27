@@ -14,7 +14,7 @@ Checkout the repo and run `npm install`.
 
 The application requires a running **mongodb** and was developped using **Node v0.10.26**.
 
-To get the mailer working (currently using Mailet), set the following env variables before runing the application.
+To get the mailer working (currently using Mailjet), set the following env variables before runing the application.
 
 ```shell
 export MAILJET_API_KEY=XXXXXXXXXXXXXXXXXXXXXXXXXXXX
