@@ -35,7 +35,7 @@ app.factory('Currency', [
 ]);
 
 app.controller('CurrencyCtrl', [
-  '$scope', '$location', 'Address', 'Currency', function($scope, $location, Address, Currency) {
+  '$scope', '$location', '$timeout', 'Address', 'Currency', function($scope, $location, $timeout, Address, Currency) {
     $scope.handleClick = function(currency) {
       var current;
       current = $("button[data-currency=" + currency + "]");
@@ -48,7 +48,21 @@ app.controller('CurrencyCtrl', [
         return current.find('.glyphicon').addClass('hidden');
       }, 2000);
     };
+    $scope.handleProfileUrlClick = function() {
+      var el, old_text;
+      el = $('#profile_url');
+      old_text = el.find('.small').text();
+      el.find('.small').text('Copied !');
+      el.find('.glyphicon-link').addClass('hidden');
+      el.find('.glyphicon-ok').removeClass('hidden');
+      return $timeout(function() {
+        el.find('.small').text(old_text);
+        el.find('.glyphicon-link').removeClass('hidden');
+        return el.find('.glyphicon-ok').addClass('hidden');
+      }, 1500);
+    };
     return $scope.$watch('hash', function() {
+      $scope.profile_url = 'http://gravaco.in/' + $scope.hash;
       return $scope.addresses = Address.query({
         hash: $scope.hash
       });

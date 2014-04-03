@@ -5,6 +5,8 @@ var routes = require('../routes')
 function setup(app) {
   app.get('/', routes.index);
 
+  app.get('/search', address.search);
+
   app.get('/:currency/:hash.png', address.show_currency_badge);
   app.get('/:hash.png', address.show_basic_badge);
   app.get('/:hash', address.show_profile);

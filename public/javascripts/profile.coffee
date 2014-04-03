@@ -18,7 +18,7 @@ app.factory('Currency', ['$resource',
   ]
 );
 
-app.controller('CurrencyCtrl', ['$scope', '$location', 'Address', 'Currency', ($scope, $location, Address, Currency)->
+app.controller('CurrencyCtrl', ['$scope', '$location', '$timeout', 'Address', 'Currency', ($scope, $location, $timeout, Address, Currency)->
   $scope.handleClick = (currency)->
     current = $("button[data-currency=#{currency}]")
     current.removeClass('btn-info').addClass('btn-success')
@@ -33,7 +33,22 @@ app.controller('CurrencyCtrl', ['$scope', '$location', 'Address', 'Currency', ($
 
     return
 
+  $scope.handleProfileUrlClick = ->
+    el = $('#profile_url')
+
+    old_text = el.find('.small').text()
+    el.find('.small').text('Copied !')
+    el.find('.glyphicon-link').addClass('hidden')
+    el.find('.glyphicon-ok').removeClass('hidden')
+
+    $timeout ->
+        el.find('.small').text(old_text)
+        el.find('.glyphicon-link').removeClass('hidden')
+        el.find('.glyphicon-ok').addClass('hidden')
+      , 1500
+
   # We use ng-init to pass the hash variable along, so the variable only exists later
   $scope.$watch 'hash', ->
+    $scope.profile_url = 'http://gravaco.in/' + $scope.hash
     $scope.addresses = Address.query {hash: $scope.hash}
 ]);

@@ -4,59 +4,65 @@ block header
   script(src='/javascripts/profile.js')
 
   .container.push--top.profil-page(ng-app="app")
-    - if (addresses_nb >= 1)
-      .row(ng-controller="CurrencyCtrl")
-        .row
-          .col-md-8.col-md-offset-2.text-center
-            img.img-circle(src='http://www.gravatar.com/avatar/' + hash, width='140', alt='', ng-init="hash='#{hash}';")
-            a.pull-right.btn.btn-success.btn-sm.glyphicon.glyphicon-share-alt(data-toggle="modal", data-target="#myModal")
-        .row.mt
-          .col-md-8.col-md-offset-2
-            table.table.table-hover
-              tr
-                th Currency
-                th Address
-                th &nbsp;
-              tr(ng-repeat="it in addresses")
-                td
-                  a(href="{{it.currency.url}}", target="_blank", title="Go to {{it.currency.name}} website")
-                    img(ng-src="/images/{{it.currency.symbol || 'empty'}}.png")
-                  &nbsp;
-                  {{it.currency.name}}
-                td {{it.address}}
-                td
-                  button.btn.btn-info.btn-xs(class="copy-button pull-right", data-currency="{{it.currency.symbol}}", clip-copy="it.address", clip-click="handleClick(it.currency.symbol)", title="Click to clipboard")
-                    span.legend Copy to Clipboard
-                    span.glyphicon.glyphicon-ok.hidden
+    .row(ng-controller="CurrencyCtrl")
+      .row
+        .col-md-8.col-md-offset-2.text-center
+          img.img-circle(src='http://www.gravatar.com/avatar/' + hash, width='140', alt='', ng-init="hash='#{hash}';")
+          a.pull-right.btn.btn-success.btn-sm(data-toggle="modal", data-target="#myModal")
+            span Embed badges
+            span.glyphicon.glyphicon-share-alt
+      .row.mt
+        .col-md-8.col-md-offset-2
+          table.table.table-hover
+            tr
+              th Currency
+              th Address
+              th &nbsp;
+            tr(ng-repeat="it in addresses")
+              td
+                a(href="{{it.currency.url}}", target="_blank", title="Go to {{it.currency.name}} website")
+                  img(ng-src="/images/{{it.currency.symbol || 'empty'}}.png")
+                &nbsp;
+                {{it.currency.name}}
+              td {{it.address}}
+              td
+                button.btn.btn-info.btn-xs(class="copy-button pull-right", data-currency="{{it.currency.symbol}}", clip-copy="it.address", clip-click="handleClick(it.currency.symbol)", title="Click to clipboard")
+                  span.legend Copy to Clipboard
+                  span.glyphicon.glyphicon-ok.hidden
 
+      .row.mt.text-center
+        .col-md-8.col-xs-12.col-md-offset-2
+          .input-group.input-group-lg
+            input.form-control(type="text", disabled="disabled", value="http://gravaco.in/{{hash}}")
+            .input-group-addon#profile_url(class="copy-button", clip-copy="profile_url", clip-click="handleProfileUrlClick()")
+              span.small Copy to clipboard
+              span.glyphicon.glyphicon-link
+              span.glyphicon.glyphicon-ok.hidden
 
-        .modal.fade#myModal
-          .modal-dialog
-            .modal-content
-              .modal-header
-                button.close(type="button", data-dismiss="modal")&times;
-                h3.modal-title Embed badges
+      .modal.fade#myModal
+        .modal-dialog
+          .modal-content
+            .modal-header
+              button.close(type="button", data-dismiss="modal")&times;
+              h3.modal-title Embed badges
 
-              .modal-body
-                h4 Generic badge
-                img.margin-bottom-xs.center-block(ng-src="/{{hash}}.png")
+            .modal-body
+              h4 Generic badge
+              img.margin-bottom-xs.center-block(ng-src="/{{hash}}.png")
+              .input-group.input-group-sm
+                span.input-group-addon Markdown
+                input.form-control(type="text", value="[![Donate](http://gravaco.in/{{hash}}.png)](http://gravaco.in/{{hash}})")
+              .input-group.input-group-sm
+                span.input-group-addon Image URL
+                input.form-control(type="text", value="http://gravaco.in/{{hash}}.png")
+              h4
+                | Currency-specific badges
+                select.pull-right.input-sm(ng-model="selectedCurrency", ng-options="addr.currency.symbol as addr.currency.name for addr in addresses")
+              .mt(ng-show="selectedCurrency")
+                img.margin-bottom-xs.center-block(ng-src="{{selectedCurrency}}/{{hash}}.png")
                 .input-group.input-group-sm
                   span.input-group-addon Markdown
-                  input.form-control(type="text", value="[![Donate](http://gravaco.in/{{hash}}.png)](http://gravaco.in/{{hash}})")
+                  input.form-control(type="text", value="[![Donate](http://gravaco.in/{{selectedCurrency}}/{{hash}}.png)](http://gravaco.in/{{hash}})")
                 .input-group.input-group-sm
                   span.input-group-addon Image URL
-                  input.form-control(type="text", value="http://gravaco.in/{{hash}}.png")
-                h4
-                  | Currency-specific badges
-                  select.pull-right.input-sm(ng-model="selectedCurrency", ng-options="addr.currency.symbol as addr.currency.name for addr in addresses")
-                .mt(ng-show="selectedCurrency")
-                  img.margin-bottom-xs.center-block(ng-src="{{selectedCurrency}}/{{hash}}.png")
-                  .input-group.input-group-sm
-                    span.input-group-addon Markdown
-                    input.form-control(type="text", value="[![Donate](http://gravaco.in/{{selectedCurrency}}/{{hash}}.png)](http://gravaco.in/{{hash}})")
-                  .input-group.input-group-sm
-                    span.input-group-addon Image URL
-                    input.form-control(type="text", value="http://gravaco.in/{{selectedCurrency}}/{{hash}}.png")
-    - else
-      .alert.alert-danger
-        p This profile does not exist. <a href='/' title="Go back to home">Go to home</a>.
+                  input.form-control(type="text", value="http://gravaco.in/{{selectedCurrency}}/{{hash}}.png")

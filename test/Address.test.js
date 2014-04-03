@@ -63,13 +63,15 @@ describe('Address', function() {
         done();
       });
     });
-    it('case insensitive email', function(done) {
+    it('case insensitive/trimed email', function(done) {
       Address.create(
         {email: 'RanDomEmail@example.Com', currency: bitcoin, address: bitcoin_address.address}
       , {email: 'randomemail@example.com', currency: litecoin, address: litecoin_address.address}
-      , function(err, addr_1, addr_2) {
+      , {email: ' randomemail@exaMple.com     ', currency: litecoin, address: litecoin_address.address}
+      , function(err, addr_1, addr_2, addr_3) {
         if (err) throw err;
         addr_1.encrypted_email.should.eql(addr_2.encrypted_email);
+        addr_1.encrypted_email.should.eql(addr_3.encrypted_email);
         done();
       });
     });

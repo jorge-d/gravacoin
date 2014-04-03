@@ -130,15 +130,17 @@ exports.validate = function(req, res) {
 exports.show_profile = function(req, res) {
   var hash = req.params.hash;
 
+  if (hash) hash = hash.trim().toLowerCase();
+
   Address.search_by_encrypted_validated(
     hash
   , function(err, addresses) {
-    if (err) res.send(404);
+    if (err)
+      res.send(404);
+    else if (addresses.length === 0)
+      res.redirect('/search?hash=' + hash);
     else
-      res.render('profile', {
-        hash: hash,
-        addresses_nb: addresses.length
-      })
+      res.render('profile', { hash: hash })
   });
 }
 
@@ -172,4 +174,17 @@ exports.show_currency_badge = function(req, res) {
       request.get(url).pipe(res);
     });
   });
+}
+
+exports.search = function(req, res) {
+  var email = req.query.email || '';
+
+  if (email.length > 0)
+    res.redirect('/' + Address.get_encrypted_email_for_email(email));
+  else
+    res.render('search', {
+      email: email,
+      hash: req.query.hash,
+      display_error: (req.query.hash || email.length)
+    });
 }
