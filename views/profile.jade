@@ -18,7 +18,7 @@ block header
           .input-group.input-group-lg
             .input-group-addon(style="min-width: 150px")
               .text-left
-                a(href="{{it.currency.url}}", target="_blank", title="Go to {{it.currency.name}} website")
+                a(href="{{it.currency.url}}", target="_blank", title="{{it.currency.name}}")
                   img(ng-src="/images/{{it.currency.symbol || 'empty'}}.png")
                 &nbsp;
                 {{it.currency.name}}
