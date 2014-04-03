@@ -5,8 +5,13 @@ app.factory('Currency', ['$resource',
     $resource '/api/currencies/:id' , {id: '@id'}, query: {method:'GET', isArray:true}
   ]
 )
+app.factory('Address', ['$resource',
+  ($resource)->
+    $resource('/api/:currency/addresses', {currency: '@currency'}, {})
+  ]
+);
 
-app.controller('IndexCtrl', ['$scope', '$timeout', 'Currency', ($scope, $timeout, Currency)->
+app.controller('IndexCtrl', ['$scope', '$timeout', 'Currency', 'Address', ($scope, $timeout, Currency, Address)->
   idx = 0
 
   currencySlide = ->

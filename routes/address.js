@@ -47,16 +47,21 @@ exports.show = function(req, res) {
 }
 
 exports.create = function(req, res) {
-  fetch_currency(req, res, function(currency) {
-    var address = new Address({email: req.body.email, address: req.body.address, currency: currency});
-    address.save(function (err) {
-      if (err) res.json(400, {error: "An error occured, check that the email doesn't already exist for the given currency"});
-      else {
-        mailer.send_validation(address, currency);
-        res.json(200, {message: "Created ! Waiting for validation."})
-      }
+  if (!req.body.email)
+    res.json(400, {error: "Missing 'email' parameter"});
+  else if (!req.body.address)
+    res.json(400, {error: "Missing 'address' parameter"});
+  else
+    fetch_currency(req, res, function(currency) {
+      var address = new Address({email: req.body.email, address: req.body.address, currency: currency});
+      address.save(function (err) {
+        if (err) res.json(400, {error: "An error occured, check that the email doesn't already exist for the given currency"});
+        else {
+          mailer.send_validation(address, currency);
+          res.json(200, {message: "Created ! Waiting for validation.", hash: address.encrypted_email})
+        }
+      });
     });
-  });
 }
 
 exports.update = function(req, res) {

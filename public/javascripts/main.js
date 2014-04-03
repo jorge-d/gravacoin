@@ -15,8 +15,16 @@ app.factory('Currency', [
   }
 ]);
 
+app.factory('Address', [
+  '$resource', function($resource) {
+    return $resource('/api/:currency/addresses', {
+      currency: '@currency'
+    }, {});
+  }
+]);
+
 app.controller('IndexCtrl', [
-  '$scope', '$timeout', 'Currency', function($scope, $timeout, Currency) {
+  '$scope', '$timeout', 'Currency', 'Address', function($scope, $timeout, Currency, Address) {
     var currencySlide, idx;
     idx = 0;
     currencySlide = function() {
