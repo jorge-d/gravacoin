@@ -34,7 +34,7 @@ app.factory('Currency', [
   }
 ]);
 
-app.controller('CurrencyCtrl', [
+app.controller('IndexCtrl', [
   '$scope', '$location', '$timeout', 'Address', 'Currency', function($scope, $location, $timeout, Address, Currency) {
     $scope.handleClick = function(currency) {
       var el, old_text;

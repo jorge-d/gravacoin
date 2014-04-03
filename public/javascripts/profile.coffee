@@ -18,7 +18,7 @@ app.factory('Currency', ['$resource',
   ]
 );
 
-app.controller('CurrencyCtrl', ['$scope', '$location', '$timeout', 'Address', 'Currency', ($scope, $location, $timeout, Address, Currency)->
+app.controller('IndexCtrl', ['$scope', '$location', '$timeout', 'Address', 'Currency', ($scope, $location, $timeout, Address, Currency)->
   $scope.handleClick = (currency)->
     el = $("button[data-currency=#{currency}]")
 

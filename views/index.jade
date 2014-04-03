@@ -3,8 +3,8 @@ extends layout
 block header
   script(src='/javascripts/main.js')
   #headerwrap
-    .container.text-center(ng-app="indexApp")
-      .row(ng-controller="IndexCtrl")
+    .container.text-center
+      .row
         .col-lg-12
           h1
             | Gravacoin is a free open-source <em>service</em> to share your <br/>
@@ -55,22 +55,32 @@ block content
         h1 Documentation
         p The full documentation is available in the Github <a href="http://github.com/jorge-d/gravacoin/wiki/", title="wiki">wiki</a>.
       .col-lg-12
-        h3 Register an address
+        h3.text-center Register a crypto-address by filling this form
 
-        .well.well-lg
-          code.col-md-6
-            | $> curl -X POST \
-            br
-            | http://gravaco.in/api/:currency/addresses \
-            br
-            | -d "email=your_email" \
-            br
-            | -d 'address=your_address'
-          p.col-md-6
-            | Where currency is the symbol of the currency for which you register the address
-            br
-            | A full list of available currencies is available <a href="/api/currencies" title="See wiki">here</a>
-          .clearfix &nbsp;
+        .col-sm-6.col-sm-offset-3
+          form.mt.text-center(ng-submit="createAddress()")
+            .alert.alert-danger(ng-if="error_response")
+              p {{error_response}}
+            .alert.alert-success(ng-if="success_response")
+              p Success ! You will receive an email shortly with a like to activate your registered address.
+
+            .input-group.input-group-lg.mt-xxs(class="{{error.currency}}")
+              .input-group-addon.min-width-120
+                .text-right
+                  span Currency
+              select.form-control(ng-model="new_address.currency", ng-options="currency.symbol as currency.name for currency in currencies")
+            .input-group.input-group-lg.mt-xxs(class="{{error.email}}")
+              .input-group-addon.min-width-120
+                .text-right
+                  span Email
+              input.form-control(type="email", id="inputEmail", placeholder="email@example.com", ng-model="new_address.email")
+            .input-group.input-group-lg.mt-xxs
+              .input-group-addon.min-width-120(class="{{error.address}}")
+               .text-right
+                 span Address
+              input.form-control(type="text", id="inputAddress", placeholder="e.g: DHuFoMUNkXUxeRgvKyUNQkS7vHYmMBgwH4", ng-model="new_address.address")
+
+            button.btn.btn-success.btn-lg(type="submit") Submit !
       .col-lg-12
         h3 Validate this address
 
@@ -87,7 +97,7 @@ block content
             where HASH is your encrypted email (md5)
           .clearfix &nbsp;
 
-      h3.text-center Feel free to <a href="http://github.com/jorge-d/gravacoin" title="Go to repository" target="blank">contribute</a>.
+      h3.text-center Feel free to <a href="http://github.com/jorge-d/gravacoin", title="Go to repository", target="blank">contribute</a>.
   .container
     hr
 
