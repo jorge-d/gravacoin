@@ -20,18 +20,20 @@ app.factory('Currency', ['$resource',
 
 app.controller('CurrencyCtrl', ['$scope', '$location', '$timeout', 'Address', 'Currency', ($scope, $location, $timeout, Address, Currency)->
   $scope.handleClick = (currency)->
-    current = $("button[data-currency=#{currency}]")
-    current.removeClass('btn-info').addClass('btn-success')
-    current.find('.legend').text("")
-    current.find('.glyphicon').removeClass('hidden')
+    el = $("button[data-currency=#{currency}]")
 
-    window.setInterval ()->
-        current.addClass('btn-info').removeClass('btn-success')
-        current.find('.legend').text("Copy to Clipboard")
-        current.find('.glyphicon').addClass('hidden')
-      , 2000
+    old_text = el.find('.small').text()
+    el.find('.small').text('Copied !')
+    el.find('.glyphicon-link').addClass('hidden')
+    el.find('.glyphicon-ok').removeClass('hidden')
+    el.removeClass('btn-warning').addClass('btn-success')
 
-    return
+    $timeout ->
+        el.find('.small').text(old_text)
+        el.addClass('btn-warning').removeClass('btn-success')
+        el.find('.glyphicon-link').removeClass('hidden')
+        el.find('.glyphicon-ok').addClass('hidden')
+      , 1500
 
   $scope.handleProfileUrlClick = ->
     el = $('#profile_url')

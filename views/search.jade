@@ -10,11 +10,10 @@ block header
       .col-md-8.col-md-offset-2.text-center
         h3 Search profile
 
-        .mt
-          p Too lazy to generate to <em>hash</em> an email by yourself?
-          p You can use this form to go directly to a profile page. <br />Type the email of the profile you want to visit and press the button !
         form.form-inline.mt(action='/search', method='get')
           .form-group
             input.input-lg.form-control(type="text", placeholder="someone@example.com", name="email", value=email)
           button.btn.btn-lg.btn-success.margin-left-xs(type="submit") Search !
 
+        .mt
+          p Too lazy to <em>hash</em> an email by yourself?<br />You can use this form to go directly to a profile page. <br />Type the email of the profile you want to visit and press the button !

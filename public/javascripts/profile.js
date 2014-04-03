@@ -37,16 +37,19 @@ app.factory('Currency', [
 app.controller('CurrencyCtrl', [
   '$scope', '$location', '$timeout', 'Address', 'Currency', function($scope, $location, $timeout, Address, Currency) {
     $scope.handleClick = function(currency) {
-      var current;
-      current = $("button[data-currency=" + currency + "]");
-      current.removeClass('btn-info').addClass('btn-success');
-      current.find('.legend').text("");
-      current.find('.glyphicon').removeClass('hidden');
-      window.setInterval(function() {
-        current.addClass('btn-info').removeClass('btn-success');
-        current.find('.legend').text("Copy to Clipboard");
-        return current.find('.glyphicon').addClass('hidden');
-      }, 2000);
+      var el, old_text;
+      el = $("button[data-currency=" + currency + "]");
+      old_text = el.find('.small').text();
+      el.find('.small').text('Copied !');
+      el.find('.glyphicon-link').addClass('hidden');
+      el.find('.glyphicon-ok').removeClass('hidden');
+      el.removeClass('btn-warning').addClass('btn-success');
+      return $timeout(function() {
+        el.find('.small').text(old_text);
+        el.addClass('btn-warning').removeClass('btn-success');
+        el.find('.glyphicon-link').removeClass('hidden');
+        return el.find('.glyphicon-ok').addClass('hidden');
+      }, 1500);
     };
     $scope.handleProfileUrlClick = function() {
       var el, old_text;

@@ -140,7 +140,7 @@ exports.show_profile = function(req, res) {
     else if (addresses.length === 0)
       res.redirect('/search?hash=' + hash);
     else
-      res.render('profile', { hash: hash })
+      res.render('profile', { hash: hash, gravatar_url: 'http://www.gravatar.com/avatar/' + hash })
   });
 }
 

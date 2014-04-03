@@ -10,14 +10,14 @@ html
     meta(name='author', content='Dimitri Jorge')
     meta(property="og:title", content="Gravacoin")
     meta(property="og:type", content="article")
-    meta(property="og:image", content="http://gravaco.in/images/dogecoin-main.png")
+    meta(property="og:image", content="#{gravatar_url || 'http://gravaco.in/images/dogecoin-main.png'}")
     meta(property="og:url", content="http://gravaco.in")
     meta(property="og:description", content="Gravacoin is a tool to share your crypto-addresses with the world!")
 
     meta(name="twitter:card", content="summary")
     meta(name="twitter:title", content="Gravacoin")
     meta(name="twitter:description", content="Gravacoin is a tool to share your crypto-addresses with the world!")
-    meta(name="twitter:image", content="http://gravaco.in/images/dogecoin-main.png")
+    meta(name="twitter:image", content="#{'gravatar_url || http://gravaco.in/images/dogecoin-main.png'}")
 
     title Gravacoin
 
