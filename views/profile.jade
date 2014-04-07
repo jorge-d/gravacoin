@@ -22,7 +22,7 @@ block header
                   img(ng-src="/images/{{it.currency.symbol || 'empty'}}.png")
                 &nbsp;
                 {{it.currency.name}}
-            input.form-control(type="text", disabled="disabled", value="{{it.address}}")
+            input.form-control(type="text", value="{{it.address}}", readonly)
             .input-group-btn
               button.btn.btn-warning(type="button", class="copy-button", data-currency="{{it.currency.symbol}}", clip-copy="it.address", clip-click="handleClick(it.currency.symbol)")
                 span.small Copy
@@ -33,7 +33,7 @@ block header
       .col-md-8.col-xs-12.col-md-offset-2
         h3.text-center Profile link
         .input-group.input-group-lg
-          input.form-control(type="text", disabled="disabled", value="http://gravaco.in/{{hash}}")
+          input.form-control(type="text", value="http://gravaco.in/{{hash}}" readonly)
           .input-group-addon#profile_url(class="copy-button", clip-copy="profile_url", clip-click="handleProfileUrlClick()")
             span.small Copy
             span.glyphicon.glyphicon-link

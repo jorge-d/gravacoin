@@ -13,49 +13,11 @@ block header
         a.button.btn.btn-success.btn-lg(href='#documentation') How does it work?
 
 block content
-  #how_it_works.container
-    .row.mt.centered
-      h1 List all your addresses<br />No registration required.
-      h3 Because copy/paste is so 2013, we use ZeroClipboard.
-
-    .row.mt.centered
-      .col-lg-4
-        img(src='/images/ser01.png', width='180', alt='Register your address')
-        h4 1 - Register your address
-        p Use our API to send your address
-      .col-lg-4
-        img(src='/images/ser02.png', width='180', alt='Receive code')
-        h4 2 - Receive a confirmation code
-        p Use this code to confirm your address
-      .col-lg-4
-        img(src='/images/ser03.png', width='180', alt='Validate using code')
-        h4 3 - That's it
-        p Your newly registered address appears on your profile page
-
-    .row.mt.centered.text-center
-      h3 You can then embed a badge pointing to your profile anywere !
-      p With more options to come! (Like an embedable widget?)
-      .mt
-        .col-lg-4.col-lg-offset-1.col-md-4.col-xs-12
-          a.text-right(href="/458641ed4b2725b16edbf0192ca0b2f2", target="_blank")
-            img(src="/ltc/458641ed4b2725b16edbf0192ca0b2f2.png", alt="See profile page")
-        .col-lg-2.col-md-4.col-xs-12
-          a.text-center(href="/458641ed4b2725b16edbf0192ca0b2f2", target="_blank")
-            img(src="/458641ed4b2725b16edbf0192ca0b2f2.png", alt="See profile page")
-        .col-lg-4.col-md-4.col-xs-12
-          a.text-left(href="/458641ed4b2725b16edbf0192ca0b2f2", target="_blank")
-            img(src="/btc/458641ed4b2725b16edbf0192ca0b2f2.png", alt="See profile page")
-
-  .container
-    hr
-
-  #documentation.container
+  .container#get_started
     .row.mt
-      .text-center
-        h1 Documentation
-        p The full documentation is available in the Github <a href="http://github.com/jorge-d/gravacoin/wiki/", title="wiki">wiki</a>.
-      .col-lg-12
-        h3.text-center Register a crypto-address by filling this form
+      .col-xs-12
+        h1.text-center Get started
+        h3.text-center Register an address by filling this form
 
         .col-sm-6.col-sm-offset-3
           form.mt.text-center(ng-submit="createAddress()")
@@ -82,19 +44,55 @@ block content
 
             button.btn.btn-success.btn-lg(type="submit") Submit !
 
-      .col-lg-12
-        h3.text-center Visit your profile
+      .col-xs-12
+        p.text-center
+          | Once you follow the instruction given in the email, your profile becomes available.<br />
+          | Use the <a href="/search">search page</a> to get your profile URL
 
-        .well.mt
-          code.col-md-6 http://www.gravaco.in/HASH
-          p.col-md-6.
-            Once you follow the instruction given in the email, your profile becomes available at the following url
-            where HASH is your encrypted email (md5)
-            Or you can try the <a href="/search">search page</a>.
-          .clearfix &nbsp;
-
-      h3.text-center Feel free to <a href="http://github.com/jorge-d/gravacoin", title="Go to repository", target="blank">contribute</a>.
   .container
+    hr
+
+  #how_it_works.container
+    .row.mt.centered
+      h1 List all your addresses<br />No registration required.
+      h3 Because copy/paste is so 2013, we use ZeroClipboard.
+
+    .row.mt.centered
+      .col-lg-4
+        img(src='/images/ser01.png', width='180', alt='Register your address')
+        h4 1 - Register your address
+        p Use our API to send your address
+      .col-lg-4
+        img(src='/images/ser02.png', width='180', alt='Receive code')
+        h4 2 - Receive a confirmation code
+        p Use this code to confirm your address
+      .col-lg-4
+        img(src='/images/ser03.png', width='180', alt='Validate using code')
+        h4 3 - That's it
+        p Your newly registered address appears on your profile page
+
+    .row.mt.centered.text-center
+      h3 Share your profile link or embed a badge pointing to your profile anywere !
+      .mt
+        .col-lg-4.col-lg-offset-1.col-md-4.col-xs-12
+          a.text-right(href="/458641ed4b2725b16edbf0192ca0b2f2", target="_blank")
+            img(src="/ltc/458641ed4b2725b16edbf0192ca0b2f2.png", alt="See profile page")
+        .col-lg-2.col-md-4.col-xs-12
+          a.text-center(href="/458641ed4b2725b16edbf0192ca0b2f2", target="_blank")
+            img(src="/458641ed4b2725b16edbf0192ca0b2f2.png", alt="See profile page")
+        .col-lg-4.col-md-4.col-xs-12
+          a.text-left(href="/458641ed4b2725b16edbf0192ca0b2f2", target="_blank")
+            img(src="/btc/458641ed4b2725b16edbf0192ca0b2f2.png", alt="See profile page")
+
+  .container
+    hr
+
+  .container#documentation
+    .text-center
+      h1 Documentation
+      p
+        | This plateform was built with an easy-to-use API to allow developpers to build great things !<br />
+        | The full documentation is available in the <a href="https://github.com/jorge-d/gravacoin/wiki/_pages", title="wiki">Github wiki</a>.
     hr
 
   #about.container
@@ -113,11 +111,11 @@ block content
           img.img-circle(src='http://www.gravatar.com/avatar/458641ed4b2725b16edbf0192ca0b2f2', width='100', alt='Me!')
           h4 Dimitri Jorge
           p.
-            Hi, I'm a developper currently living in Paris.
+            I'm a developper currently living in Paris.
             <br />I was looking for something to get people's DOGE address easily,
             <br />You know, just like it's easy to get someone's picture using Gravatar.
             <br />That's why I built <em>Gravacoin</em>.
-            <br />It's my first real NodeJS app so I would love to get feedbacks / contributions to the projects, feel free to contact me.
+            <br />It's my first real NodeJS app so I would love to get feedbacks / contributions to the projects. Also, feel free to contact me.
           ul.list-unstyled.list-inline
             li
               a(href="http://twitter.com/Dimitri_Jorge")
@@ -132,10 +130,13 @@ block content
   .container
     hr
     row.centered
-      p.col-md-6.col-sm-8.text-left
+      p.col-md-3.col-sm-4.col-xs-12
         | Theme by &nbsp;
         a(href="http://blacktie.co", tile="blacktie") BlackTie.co
-      p.col-md-6.col-sm-4.text-right
+      p.col-md-6.col-sm-4.col-xs-12
+        | Feel free to <a href="http://github.com/jorge-d/gravacoin", title="Go to repository", target="blank">contribute</a>
+
+      p.col-md-3.col-sm-4.col-xs-12
         | Inspired by &nbsp;
         a(href="http://keybase.io", tile="keybase") Keybase.io
 
