@@ -2,6 +2,15 @@ extends layout
 
 block header
   script(src='/javascripts/profile.js')
+  #fb-root &nbsp;
+  script.
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=136398153061636";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 
   .container.push--top.profil-page
     .row
@@ -38,6 +47,11 @@ block header
             span.small Copy
             span.glyphicon.glyphicon-link
             span.glyphicon.glyphicon-ok.hidden
+    .row.mt.text-center
+      ul.list-unstyled.list-inline
+        li <a href="https://twitter.com/share" class="twitter-share-button" data-text="Wanna tip me some coins? Check out my #Gravacoin profile!" data-size="normal" data-count="none">Tweet</a>
+        li.facebook-share <div class="fb-share-button" data-href="http://gravaco.in/{{hash}}" data-type="button"></div>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 
     .modal.fade#myModal
       .modal-dialog
