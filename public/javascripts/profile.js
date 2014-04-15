@@ -1,6 +1,6 @@
 var app;
 
-app = angular.module('app', ['ngResource', 'ngClipboard']);
+app = angular.module('app', ['ngResource', 'ngClipboard', 'monospaced.qrcode']);
 
 app.config([
   'ngClipProvider', function(ngClipProvider) {
@@ -50,6 +50,19 @@ app.controller('IndexCtrl', [
         el.find('.glyphicon-link').removeClass('hidden');
         return el.find('.glyphicon-ok').addClass('hidden');
       }, 1500);
+    };
+    $scope.address_for_currency = function(currency) {
+      var address, _i, _len, _ref;
+      if (!currency) {
+        return '';
+      }
+      _ref = $scope.addresses;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        address = _ref[_i];
+        if (address.currency.symbol === currency) {
+          return address.address;
+        }
+      }
     };
     $scope.handleProfileUrlClick = function() {
       var el, old_text;

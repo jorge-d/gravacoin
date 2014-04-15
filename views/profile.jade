@@ -1,6 +1,8 @@
 extends layout
 
 block header
+  script(src='/qrcode-generator/qrcode.js')
+  script(src='/angular/angular-qrcode.js')
   script(src='/javascripts/profile.js')
   #fb-root &nbsp;
   script.
@@ -16,7 +18,7 @@ block header
     .row
       .pull-right
         a.btn.btn-success(data-toggle="modal", data-target="#myModal")
-          span Badges
+          span Badges &amp; QR-Code
           span.glyphicon.glyphicon-share-alt
       .col-md-8.col-md-offset-2.col-xs-12.text-center
         img.img-circle(src=gravatar_url, width='140', alt='', ng-init="hash='#{hash}';")
@@ -62,10 +64,10 @@ block header
         .modal-content
           .modal-header
             button.close(type="button", data-dismiss="modal")&times;
-            h3.modal-title Embed badges
+            h3.modal-title Embed &amp; QR-Code
 
           .modal-body
-            h4 Generic badge
+            h3 Generic badge
             img.margin-bottom-xs.center-block(ng-src="/{{hash}}.png")
             .input-group.input-group-sm
               span.input-group-addon Markdown
@@ -73,14 +75,20 @@ block header
             .input-group.input-group-sm
               span.input-group-addon Image URL
               input.form-control(type="text", value="http://gravaco.in/{{hash}}.png")
-            h4
-              | Currency-specific badges
+            h3
+              | Select a currency
               select.pull-right.input-sm(ng-model="selectedCurrency", ng-options="addr.currency.symbol as addr.currency.name for addr in addresses")
             .mt(ng-show="selectedCurrency")
-              img.margin-bottom-xs.center-block(ng-src="{{selectedCurrency}}/{{hash}}.png")
-              .input-group.input-group-sm
-                span.input-group-addon Markdown
-                input.form-control(type="text", value="[![Donate](http://gravaco.in/{{selectedCurrency}}/{{hash}}.png)](http://gravaco.in/{{hash}})")
-              .input-group.input-group-sm
-                span.input-group-addon Image URL
-                input.form-control(type="text", value="http://gravaco.in/{{selectedCurrency}}/{{hash}}.png")
+              h4 Badge
+                img.margin-bottom-xs.center-block(ng-src="{{selectedCurrency}}/{{hash}}.png")
+                .input-group.input-group-sm
+                  span.input-group-addon Markdown
+                  input.form-control(type="text", value="[![Donate](http://gravaco.in/{{selectedCurrency}}/{{hash}}.png)](http://gravaco.in/{{hash}})")
+                .input-group.input-group-sm
+                  span.input-group-addon Image URL
+                  input.form-control(type="text", value="http://gravaco.in/{{selectedCurrency}}/{{hash}}.png")
+
+              h4 QR-Code
+              .center-block.text-center(style="width: 300px;")
+                qrcode(data="{{address_for_currency(selectedCurrency)}}" size="250" error-correction-level="H")
+                p.strong {{address_for_currency(selectedCurrency)}}

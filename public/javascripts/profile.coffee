@@ -1,4 +1,4 @@
-app = angular.module('app', ['ngResource', 'ngClipboard']);
+app = angular.module('app', ['ngResource', 'ngClipboard', 'monospaced.qrcode']);
 
 app.config(['ngClipProvider', (ngClipProvider)->
   ngClipProvider.setPath("zeroclipboard/ZeroClipboard.swf");
@@ -34,6 +34,13 @@ app.controller('IndexCtrl', ['$scope', '$location', '$timeout', 'Address', 'Curr
         el.find('.glyphicon-link').removeClass('hidden')
         el.find('.glyphicon-ok').addClass('hidden')
       , 1500
+
+  $scope.address_for_currency = (currency)->
+    return '' unless currency
+
+    for address in $scope.addresses
+      if address.currency.symbol == currency
+        return address.address
 
   $scope.handleProfileUrlClick = ->
     el = $('#profile_url')
