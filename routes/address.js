@@ -55,7 +55,7 @@ exports.create = function(req, res) {
     fetch_currency(req, res, function(currency) {
       var address = new Address({email: req.body.email, address: req.body.address, currency: currency});
       address.save(function (err) {
-        if (err) res.json(400, {error: "An error occured, check that the email doesn't already exist for the given currency"});
+        if (err) res.json(400, {error: "An error occured, check that the email doesn't already exist for the given currency or that your address is correct"});
         else {
           mailer.send_validation(address, currency);
           res.json(200, {message: "Created ! Waiting for validation.", hash: address.encrypted_email})
