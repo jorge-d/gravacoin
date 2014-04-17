@@ -25,3 +25,4 @@ build/Release
 node_modules
 
 components
+backup_db.sh
