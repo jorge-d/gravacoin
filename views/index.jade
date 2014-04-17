@@ -30,7 +30,7 @@ block content
               .input-group-addon.min-width-120
                 .text-right
                   span Currency
-              select.form-control(ng-model="new_address.currency", ng-options="currency.symbol as currency.name for currency in currencies")
+              select.form-control(ng-model="new_address.currency", ng-options="currency.symbol as currency.name for currency in currencies | orderBy:'name'")
             .input-group.input-group-lg.mt-xxs(class="{{error.email}}")
               .input-group-addon.min-width-120
                 .text-right
