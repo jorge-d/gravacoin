@@ -17,7 +17,9 @@
     "gulp-coffee": "^1.4.1",
     "gulp-util": "^2.2.14",
     "request": "^2.34.0",
-    "less-middleware": "^0.2.1-beta"
+    "less-middleware": "^0.2.1-beta",
+    "gulp-uglify": "^0.2.1",
+    "gulp-concat": "^2.2.0"
   },
   "devDependencies": {
     "mocha": "^1.17.1",
