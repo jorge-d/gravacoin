@@ -6,9 +6,9 @@ block header
     .container.text-center
       .row
         .col-lg-12
-          h1
-            | Gravacoin is a free open-source <em>service</em> to share your <br/>
-            | <strong>{{currency}}</strong> address with the world.
+          h1.
+            Gravacoin is a free open-source <em>service</em> that allows you to build a donation page so that you can <em>share</em> your<br/>
+            <strong>{{currency}}</strong> address with the world.
       .row.mt
         a.button.btn.btn-success.btn-lg(href='#how_it_works') How does it work?
 
@@ -45,31 +45,31 @@ block content
             button.btn.btn-success.btn-lg(type="submit") Submit !
 
       .col-xs-12
-        p.text-center
-          | Once you follow the instruction given in the email, your profile becomes available.<br />
-          | Use the <a href="/search">search page</a> to get your profile URL
+        p.text-center.
+          Your profile becomes available once you click on the validation link sent by email.<br />
+          Use the <a href="/search">search page</a> to get your profile URL
 
   .container
     hr
 
   #how_it_works.container
     .row.mt.centered
-      h1 List all your addresses<br />No registration required.
-      h3 Because copy/paste is so 2013, we use ZeroClipboard.
+      h1 Build a crypto-donation page<br />No registration required
+      h3 Because copy/paste is so 2013
 
     .row.mt.centered
       .col-lg-4
         img(src='/images/ser01.png', width='180', alt='Register your address')
-        h4 1 - Register your address
-        p Use our API to send your address
+        h4 1 - Register an address
+        p Fill out the form above or use our API to send your address
       .col-lg-4
         img(src='/images/ser02.png', width='180', alt='Receive code')
-        h4 2 - Receive a confirmation code
-        p Use this code to confirm your address
+        h4 2 - You receive a link
+        p Click on this link to confirm your address
       .col-lg-4
         img(src='/images/ser03.png', width='180', alt='Validate using code')
         h4 3 - That's it
-        p Your newly registered address appears on your profile page
+        p Your newly registered address appears on your donation page
 
     .row.mt.centered.text-center
       h3 Share your profile link or embed a badge pointing to your profile anywere !
