@@ -23,7 +23,7 @@ block header
     .row.mt
       .col-md-8.col-md-offset-2
         h2.text-center Addresses
-        div.mt-xs(ng-repeat="it in addresses")
+        div.mt-xs(ng-repeat="it in addresses | orderBy:'currency.name'")
           .input-group.input-group-lg
             .input-group-addon(style="min-width: 150px")
               .text-left
@@ -49,7 +49,7 @@ block header
             span.glyphicon.glyphicon-ok.hidden
     .row.text-center
       ul.list-unstyled.list-inline
-        li <a href="https://twitter.com/share" class="twitter-share-button" data-text="Wanna tip me some coins? Check out my #Gravacoin profile!" data-size="normal" data-count="none">Tweet</a>
+        li <a href="https://twitter.com/share" class="twitter-share-button" data-text="Wanna tip me some coins? Check out my donation profile" data-size="normal" data-count="none" data-via="Gravacoin">Tweet</a>
         li.facebook-share <div class="fb-share-button" data-href="http://gravaco.in/{{hash}}" data-type="button"></div>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     p.mt-xs.text-center.small This is your profile? Change/Create your profile picture on <a href="http://gravatar.com/#{hash}" title="Change your profile picture on Gravatar" target="blank">Gravatar</a>.
@@ -72,7 +72,7 @@ block header
               input.form-control(type="text", value="http://gravaco.in/{{hash}}.png")
             h3
               | Select a currency
-              select.pull-right.input-sm(ng-model="selectedCurrency", ng-options="addr.currency.symbol as addr.currency.name for addr in addresses")
+              select.pull-right.input-sm(ng-model="selectedCurrency", ng-options="addr.currency.symbol as addr.currency.name for addr in addresses | orderBy:'currency.name'")
             .mt(ng-show="selectedCurrency")
               h4 Badge
                 img.margin-bottom-xs.center-block(ng-src="{{selectedCurrency}}/{{hash}}.png")
