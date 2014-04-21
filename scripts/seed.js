@@ -33,6 +33,7 @@ Currency.create(
   , {name: 'Megacoin', symbol: 'mec', url: 'http://megacoin.in'}
   , {name: 'BlackCoin', symbol: 'bc', url: 'http://blackcoin.co'}
   , {name: 'DarkCoin', symbol: 'drk', url: 'http://darkcoin.io'}
+  , {name: 'BonusCoin', symbol: 'bns', url: 'http://bonuscoin.net'}
   , handleRes
 );
 
