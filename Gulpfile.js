@@ -48,8 +48,8 @@ gulp.task('lint', function() {
 });
 
 gulp.task('develop', function () {
-  nodemon({ script: 'app.js', ext: 'html js coffee', ignore: ['test/*', 'Gulpfile.js'] })
-    .on('change', ['lint', 'coffee', 'merge_libs'])
+  nodemon({ script: 'app.js', ext: 'html coffee js', ignore: ['test/*', 'Gulpfile.js', 'public/*', 'node_modules/*'] })
+    .on('change', ['lint', 'coffee'])
     .on('restart', function () {
       console.log('restarted!')
     })

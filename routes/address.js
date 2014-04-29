@@ -125,7 +125,10 @@ exports.validate = function(req, res) {
         res.json(400, {error: "invalid token"})
       else {
         address.set_as_validated(function() {
-          res.json(200);
+          if ('redirect' in req.query)
+            res.redirect('/' + address.encrypted_email);
+          else
+            res.json(200);
         });
       }
     });

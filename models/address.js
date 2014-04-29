@@ -103,7 +103,7 @@ AddressSchema.methods = {
     }
   },
   get_validation_url: function(currency) {
-    return "http://gravaco.in/api/" + currency.symbol + '/' + this.encrypted_email + '/validate/' + this.validation_token
+    return "http://gravaco.in/api/" + currency.symbol + '/' + this.encrypted_email + '/validate/' + this.validation_token + '?redirect'
   },
   get_new_address_validation_url: function(currency) {
     return "http://gravaco.in/api/" + currency.symbol + '/' + this.encrypted_email + '/validate_change/' + this.validation_token

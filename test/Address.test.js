@@ -287,6 +287,27 @@ describe('Address', function() {
             });
           });
       });
+      it('redirects on correct validation a "redirect" param is present', function(done) {
+        Address.create(
+            {email: litecoin_address.email, currency: dogecoin, address: 'Dgs5HMfXMMHZA8wsmYtLb5XF8uTPHpq9Sa'}
+          , function(err, dogecoin_address) {
+            if (err) throw err;
+            request(app)
+              .get('/api/' + dogecoin.symbol + '/' + dogecoin_address.encrypted_email + '/validate/' + dogecoin_address.validation_token + '?redirect')
+              .expect(302)
+              .end(function(err, res) {
+                if (err) throw err;
+
+                res.header['location'].should.eql('/' + dogecoin_address.encrypted_email);
+
+                Address.search_by_email_and_currency(dogecoin_address.email, dogecoin, function(err, address) {
+                  should.exist(address.validated_at);
+                  address.validated.should.eql(true);
+                  done();
+                });
+              });
+        });
+      });
       it('handles error correctly', function(done) {
         request(app)
           .get('/api/' + litecoin.symbol + '/' + litecoin_address.encrypted_email + '/validate/invalid_token')
