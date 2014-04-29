@@ -39,6 +39,15 @@ html
       ga('create', 'UA-49426829-1', 'gravaco.in');
       ga('send', 'pageview');
 
+    script.
+      UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/qvv7LX9jKc9WynuM923u7Q.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+      UserVoice.push(['set', {
+        accent_color: '#6aba2e',
+        trigger_color: 'white',
+        trigger_background_color: '#6aba2e'
+      }]);
+      UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-right' }]);
+
   body(ng-app="app", ng-controller="IndexCtrl")
     script(src='/javascripts/all_libraries.min.js')
 
