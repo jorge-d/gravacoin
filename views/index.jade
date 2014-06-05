@@ -89,54 +89,19 @@ block content
   .container
     hr
 
-  .container#documentation
-    .text-center
-      h1 Documentation
+  .container
+    .col-md-6.text-left#documentation
+      h3 You are a developer?
       p
         | This plateform was built with an easy-to-use API to allow developpers to build great things !<br />
         | The full documentation is available in the <a href="https://github.com/jorge-d/gravacoin/wiki/_pages", title="wiki">Github wiki</a>.
-    hr
+    .col-md-6.text-right#about
+      h3 Aknowledgement
+      ul.list-unstyled
+        li <a href="//github.com/BGuimberteau" title="Benjamin">Benjamin Guimberteau</a> for hosting the service
+        li <a href="//github.com/Unitech" title="Alexandre">Alexandre Strzelewicz</a> for his <a href="//github.com/Unitech/pm2" title="pm2">process manager</a>
+        li <strong>Eveyone</strong> who send me feedbacks !
 
-  #about.container
-    .row
-      .col-md-4.col-sm-12.text-center
-        h2 Thanks to
-        .row.mt
-          ul.list-unstyled
-            li <a href="//github.com/BGuimberteau" title="Benjamin">Benjamin Guimberteau</a> for hosting the service
-            li <a href="//github.com/Unitech" title="Alexandre">Alexandre Strzelewicz</a> for his <a href="//github.com/Unitech/pm2" title="pm2">process manager</a>
-            li <a href="//blacktie.co" title="BlackTie">BlackTie.co</a> for the free theme
-            li <a href="//iconsdb.com/" title="IconsDB">IconsDB</a> for their amazing icons
-            li And <strong>eveyone</strong> who send me feedbacks !
-
-        a.twitter-follow-button(href="https://twitter.com/Gravacoin", data-show-count="false", data-size="large") Follow @Gravacoin
-        script.
-          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-
-      .col-md-6.col-md-offset-2.col-sm-12.text-center
-        h2 About the author
-        .mt
-          img.img-circle(src='http://www.gravatar.com/avatar/458641ed4b2725b16edbf0192ca0b2f2', width='100', alt='Me!')
-          h4 Dimitri Jorge
-          p.
-            I'm a developper currently living in Paris.
-            <br />I was looking for something to get people's DOGE address easily,
-            <br />You know, just like it's easy to get someone's picture using Gravatar.
-            <br />That's why I built <em>Gravacoin</em>.
-            <br />It's my first real NodeJS app so I would love to get feedbacks / contributions to the projects. Also, feel free to contact me.
-          ul.list-unstyled.list-inline
-            li
-              a(href="http://twitter.com/Dimitri_Jorge")
-                img(src="/images/twitter-32.png", alt="Twitter")
-            li
-              a(href="http://github.com/jorge-d")
-                img(src="/images/github-6-32.png", alt="Github")
-            li
-              a(href="http://linkedin.com/pub/dimitri-jorge/5b/919/4b7/")
-                img(src="/images/linkedin-3-32.png", alt="Github")
-
-  .text-center
-    <a href="//www.iubenda.com/privacy-policy/551533" class="iubenda-white iubenda-embed" title="Privacy Policy">Privacy Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "//cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
   .container
     hr
     row.centered
@@ -146,8 +111,12 @@ block content
       p.col-md-6.col-sm-4.col-xs-12
         | Feel free to <a href="http://github.com/jorge-d/gravacoin", title="Go to repository", target="blank">contribute</a>
 
-      p.col-md-3.col-sm-4.col-xs-12
-        | Inspired by &nbsp;
-        a(href="http://keybase.io", tile="keybase") Keybase.io
+      .col-md-3.col-sm-4.col-xs-12
+        ul.list-unstyled.list-inline
+          li
+            a.twitter-follow-button(href="https://twitter.com/Gravacoin", data-show-count="false", data-size="medium") Follow @Gravacoin
+          li <a href="//www.iubenda.com/privacy-policy/551533" class="iubenda-white iubenda-embed" title="Privacy Policy">Privacy Policy</a><script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "//cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+        script.
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 
 
