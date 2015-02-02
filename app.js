@@ -4,6 +4,13 @@
  */
 
 var namespace = require('express-namespace');
+var axm = require('axm');
+axm.http();
+
+axm.catchAll();
+
+var http = require('http');
+
 var express = require('express');
 
 // Load configurations
@@ -14,6 +21,8 @@ app = express();
 require('./models/db')
 require('./config/express')(app, config);
 require('./config/routes').setup(app);
+
+app.use(axm.expressErrorHandler());
 
 app.set('port', process.env.PORT || config.port);
 

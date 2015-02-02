@@ -6,6 +6,23 @@ function setup(app) {
   app.get('/', routes.index);
 
   app.get('/search', address.search);
+  app.get('/raise', function() {
+    var err = new Error("This is the raise route");
+
+    throw err;
+  });
+  app.get('/overload', function(req, res) {
+    var count = 0
+
+    intervalID = setInterval(function () {
+      for (var i = 0; i < 1024 * 1024 * 1024 * 2; ++i);
+      count++;
+      if (count == 10) {
+        res.send("variable incremented :" + i + ' times')
+        clearInterval(intervalID);
+      }
+    }, 6000);
+  });
 
   app.get('/:currency/:hash.png', address.show_currency_badge);
   app.get('/:hash.png', address.show_basic_badge);
