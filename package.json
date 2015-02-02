@@ -6,20 +6,21 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.5.0",
-    "jade": "*",
-    "express-less-middleware": "^1.1.2",
-    "mongoose": "^3.8.8",
     "async": "^0.2.10",
-    "validator": "^3.5.0",
-    "nodemailer": "^0.6.1",
+    "axm": "^0.2.26",
+    "express": "3.5.0",
+    "express-less-middleware": "^1.1.2",
     "express-namespace": "^0.1.1",
     "gulp-coffee": "^1.4.1",
-    "gulp-util": "^2.2.14",
-    "request": "^2.34.0",
-    "less-middleware": "^0.2.1-beta",
+    "gulp-concat": "^2.2.0",
     "gulp-uglify": "^0.2.1",
-    "gulp-concat": "^2.2.0"
+    "gulp-util": "^2.2.14",
+    "jade": "*",
+    "less-middleware": "^0.2.1-beta",
+    "mongoose": "^3.8.8",
+    "nodemailer": "^0.6.1",
+    "request": "^2.34.0",
+    "validator": "^3.5.0"
   },
   "devDependencies": {
     "mocha": "^1.17.1",
