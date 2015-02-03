@@ -4,6 +4,13 @@ var mongoose = require('mongoose')
   , Address = mongoose.model('Address')
   , mailer = require('../config/mailer');
 
+var axm = require('axm');
+var probe = axm.probe();
+
+var counter = probe.counter({
+  name : 'Profile display'
+});
+
 function fetch_currency(req, res, callback) {
   Currency.findOne(
     {symbol: req.params.currency}
@@ -138,6 +145,11 @@ exports.validate = function(req, res) {
 exports.show_profile = function(req, res) {
   var hash = req.params.hash;
 
+  axm.emit('user:display', {
+    hash : hash
+  });
+  counter.inc();
+
   if (hash) hash = hash.trim().toLowerCase();
 
   Address.search_by_encrypted_validated(
@@ -160,8 +172,13 @@ exports.show_basic_badge = function(req, res) {
 
     if (err || address.length === 0)
       url = 'http://b.repl.ca/v1/Gravacoin-not%20found-red.png';
-    else
+    else {
+      axm.emit('user:display_generic_badge', {
+        hash : req.params.hash
+      });
+
       url = 'http://b.repl.ca/v1/Donate-coins-53AEFF.png';
+    }
 
     request.get(url).pipe(res);
   });
@@ -176,8 +193,13 @@ exports.show_currency_badge = function(req, res) {
 
       if (err || !address)
         url = 'http://b.repl.ca/v1/Gravacoin-Address%20not%20found-red.png';
-      else
+      else {
         url = 'http://b.repl.ca/v1/' + currency.name + '-' + address.address + '-53AEFF.png';
+        axm.emit('user:display_badge', {
+          hash : req.params.hash,
+          currency: currency.name
+        });
+      }
 
       request.get(url).pipe(res);
     });
