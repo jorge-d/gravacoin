@@ -1,5 +1,4 @@
 # Gravacoin
-
 [![Donate](http://gravaco.in/doge/458641ed4b2725b16edbf0192ca0b2f2.png)](http://gravaco.in/458641ed4b2725b16edbf0192ca0b2f2)
 [![Donate](http://gravaco.in/btc/458641ed4b2725b16edbf0192ca0b2f2.png)](http://gravaco.in/458641ed4b2725b16edbf0192ca0b2f2)
 
