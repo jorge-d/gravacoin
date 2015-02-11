@@ -1,6 +1,7 @@
 # Gravacoin
 
 [![Donate](http://gravaco.in/doge/458641ed4b2725b16edbf0192ca0b2f2.png)](http://gravaco.in/458641ed4b2725b16edbf0192ca0b2f2)
+[![Donate](http://gravaco.in/btc/458641ed4b2725b16edbf0192ca0b2f2.png)](http://gravaco.in/458641ed4b2725b16edbf0192ca0b2f2)
 
 [Gravacoin](http://gravaco.in) is a free open-source service to share your crypto-addresses with the world
 
