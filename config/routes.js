@@ -6,11 +6,8 @@ function setup(app) {
   app.get('/', routes.index);
 
   app.get('/search', address.search);
-  app.get('/raise', function() {
-    var err = new Error("This is the raise route");
-
-    throw err;
-  });
+  app.get('/raise',   function() { throw new Error("This is the raise route"); });
+  app.get('/raise2',  function() { throw new Error("Another error bro !");     });
   app.get('/overload', function(req, res) {
     var count = 0
 

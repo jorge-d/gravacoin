@@ -4,10 +4,10 @@
  */
 
 var namespace = require('express-namespace');
-var axm = require('axm');
-axm.http();
+var pmx = require('pmx');
+pmx.http();
 
-axm.catchAll();
+pmx.catchAll();
 
 var http = require('http');
 
@@ -22,7 +22,7 @@ require('./models/db')
 require('./config/express')(app, config);
 require('./config/routes').setup(app);
 
-app.use(axm.expressErrorHandler());
+app.use(pmx.expressErrorHandler());
 
 app.set('port', process.env.PORT || config.port);
 

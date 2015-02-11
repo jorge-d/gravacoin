@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "async": "^0.2.10",
-    "axm": "^0.2.26",
+    "pmx": "*",
     "express": "3.5.0",
     "express-less-middleware": "^1.1.2",
     "express-namespace": "^0.1.1",
