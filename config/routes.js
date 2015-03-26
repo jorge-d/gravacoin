@@ -6,6 +6,8 @@ function setup(app) {
   app.get('/', routes.index);
 
   app.get('/search', address.search);
+  app.get('/500',   function(req, res) { res.send(500, "") });
+  app.get('/long',   function(req, res) { setTimeout(function(){ res.send("success")}, 300) });
   app.get('/raise',   function() { throw new Error("This is the raise route"); });
   app.get('/raise2',  function() { throw new Error("Another error bro !");     });
   app.get('/overload', function(req, res) {

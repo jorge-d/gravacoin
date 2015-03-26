@@ -4,10 +4,27 @@
  */
 
 var namespace = require('express-namespace');
-var pmx = require('pmx');
-pmx.http();
+var pmx = require('pmx').init();
+// pmx.http();
 
-pmx.catchAll();
+// pmx.catchAll();
+
+pmx.probe().metric({
+  name : 'TEST AGG_TYPE',
+  agg_type: 'min',
+  value : function() {
+    return '12blih/s';
+  }
+});
+
+pmx.probe().metric({
+  name : 'NO AGG TYPE',
+  agg_type: 'none',
+  value : function() {
+    return 42;
+  }
+});
+
 
 var http = require('http');
 
