@@ -4,7 +4,7 @@ var mongoose = require('mongoose')
   , Address = mongoose.model('Address')
   , mailer = require('../config/mailer');
 
-var axm = require('axm');
+var axm = require('pmx');
 var probe = axm.probe();
 
 var counter = probe.counter({
