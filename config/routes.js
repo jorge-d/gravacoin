@@ -1,6 +1,7 @@
 var routes = require('../routes')
   , address = require('../routes/address')
-  , currency = require('../routes/currency');
+  , currency = require('../routes/currency')
+  , pmx = require('pmx');
 
 function setup(app) {
   app.get('/', routes.index);
@@ -10,6 +11,15 @@ function setup(app) {
   app.get('/long',   function(req, res) { setTimeout(function(){ res.send("success")}, 300) });
   app.get('/raise',   function() { throw new Error("This is the raise route"); });
   app.get('/raise2',  function() { throw new Error("Another error bro !");     });
+  app.get('/raise3',  function() { throw "a string" } );
+
+  app.get('/emit1', function(req, res) { pmx.notify({ success : false }); res.send("ok1")})
+  app.get('/emit2', function(req, res) { pmx.notify('This is an error'); res.send("ok2")})
+  app.get('/emit3', function(req, res) { pmx.notify(new Error('This is an error')); res.send("ok3")})
+  app.get('/emit4', function(req, res) { pmx.notify(); res.send("ok3")})
+  app.get('/emit5', function(req, res) { throw "error!"; } )
+  app.get('/emit6', function(req, res) { var obj = {toto: 'lol'}; throw obj } )
+
   app.get('/overload', function(req, res) {
     var count = 0
 
