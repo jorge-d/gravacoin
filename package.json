@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "async": "^0.2.10",
-    "pmx": "*",
     "express": "3.5.0",
     "express-less-middleware": "^1.1.2",
     "express-namespace": "^0.1.1",
@@ -17,8 +16,9 @@
     "gulp-util": "^2.2.14",
     "jade": "*",
     "less-middleware": "^0.2.1-beta",
-    "mongoose": "^3.8.8",
+    "mongoose": "^4.0.0",
     "nodemailer": "^0.6.1",
+    "pmx": "*",
     "request": "^2.34.0",
     "validator": "^3.5.0"
   },

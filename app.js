@@ -4,7 +4,7 @@
  */
 
 var namespace = require('express-namespace');
-var pmx = require('pmx').init();
+var pmx = require('pmx')
 // pmx.http();
 
 // pmx.catchAll();
